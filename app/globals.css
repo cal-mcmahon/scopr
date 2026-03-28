@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #111318;
+  --foreground: #E5E7EB;
+  --accent: #4ADE80;
 }
 
 @theme inline {
@@ -14,13 +15,76 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #111318;
+    --foreground: #E5E7EB;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@keyframes terminal-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.terminal-cursor,
+.typewriter-cursor {
+  color: #4ade80;
+  animation: terminal-blink 600ms steps(1, end) infinite;
+}
+
+.lift-card {
+  transition:
+    transform 200ms ease,
+    border-left-color 200ms ease;
+}
+
+.lift-card:hover {
+  transform: translateY(-4px);
+}
+
+.accent-green-soft {
+  border-left-color: rgba(74, 222, 128, 0.7);
+}
+
+.accent-green-soft:hover {
+  border-left-color: rgba(74, 222, 128, 1);
+}
+
+.accent-green {
+  border-left-color: rgba(74, 222, 128, 0.75);
+}
+
+.accent-green:hover {
+  border-left-color: rgba(74, 222, 128, 1);
+}
+
+.accent-amber {
+  border-left-color: rgba(239, 159, 39, 0.72);
+}
+
+.accent-amber:hover {
+  border-left-color: rgba(239, 159, 39, 1);
+}
+
+.accent-gray {
+  border-left-color: rgba(107, 114, 128, 0.72);
+}
+
+.accent-gray:hover {
+  border-left-color: rgba(107, 114, 128, 1);
 }
