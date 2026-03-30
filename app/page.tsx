@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const HERO_HEADLINE =
@@ -149,12 +150,12 @@ export default function Home() {
             </span>
           </div>
 
-          <a
-            href="#final-cta"
+          <Link
+            href="/waitlist"
             className="inline-flex h-10 items-center justify-center rounded-lg bg-[#4ADE80] px-4 text-sm font-medium text-[#0B1220] transition-colors hover:bg-[#4ADE80]/90"
           >
             Get started
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -182,12 +183,12 @@ export default function Home() {
               building.
             </p>
 
-            <a
-              href="#final-cta"
+            <Link
+              href="/waitlist"
               className="mt-10 inline-flex h-12 items-center justify-center rounded-xl bg-[#4ADE80] px-6 text-base font-medium text-[#0B1220] transition-colors hover:bg-[#4ADE80]/90"
             >
               Analyse my idea free
-            </a>
+            </Link>
 
             <p className="mt-4 text-sm text-white/65">
               <span className="font-mono text-[#4ADE80]">{secondsCount}</span>{" "}
@@ -299,12 +300,12 @@ export default function Home() {
                 in 60 seconds.
               </h2>
               <div className="mt-10">
-                <a
-                  href="#final-cta"
+                <Link
+                  href="/waitlist"
                   className="inline-flex h-12 items-center justify-center rounded-xl bg-[#4ADE80] px-6 text-base font-medium text-[#0B1220] transition-colors hover:bg-[#4ADE80]/90"
                 >
                   Analyse my idea free
-                </a>
+                </Link>
               </div>
             </div>
           </motion.div>
