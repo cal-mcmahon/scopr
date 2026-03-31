@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase";
 
 const WORDMARK = "Scopr";
 const TAGLINE =
-  "You have a rough idea. Scopr turns it into a polished app plan in 60 seconds.";
+  "Know which idea to build next — in 60 seconds.";
 
 const MONO =
   "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace";

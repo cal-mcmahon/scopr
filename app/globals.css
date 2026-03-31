@@ -57,6 +57,14 @@ a {
   transform: translateY(-4px);
 }
 
+.landing-card-hover {
+  transition: transform 200ms ease;
+}
+
+.landing-card-hover:hover {
+  transform: translateY(-2px);
+}
+
 .accent-green-soft {
   border-left-color: rgba(74, 222, 128, 0.7);
 }
@@ -82,9 +90,9 @@ a {
 }
 
 .accent-gray {
-  border-left-color: rgba(107, 114, 128, 0.72);
+  border-left-color: rgba(136, 135, 128, 0.85);
 }
 
 .accent-gray:hover {
-  border-left-color: rgba(107, 114, 128, 1);
+  border-left-color: #888780;
 }

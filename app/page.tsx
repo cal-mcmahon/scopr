@@ -1,15 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-
-const HERO_HEADLINE =
-  "You have a rough idea. Scopr turns it into a polished app plan in 60 seconds.";
+import { useEffect, useRef } from "react";
 
 function TerminalComment({ text }: { text: string }) {
   return (
-    <p className="font-mono text-xs text-[#4ADE80]">
+    <p className="font-mono text-[0.875rem] leading-normal text-[#4ADE80]">
       {text}
       <span aria-hidden="true" className="terminal-cursor">
         █
@@ -19,49 +15,11 @@ function TerminalComment({ text }: { text: string }) {
 }
 
 export default function Home() {
-  const [typedHeadline, setTypedHeadline] = useState("");
-  const [isTypingDone, setIsTypingDone] = useState(false);
-  const [secondsCount, setSecondsCount] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    let charIndex = 0;
-    const interval = window.setInterval(() => {
-      charIndex += 1;
-      setTypedHeadline(HERO_HEADLINE.slice(0, charIndex));
-
-      if (charIndex >= HERO_HEADLINE.length) {
-        window.clearInterval(interval);
-        setIsTypingDone(true);
-      }
-    }, 28);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const durationMs = 1500;
-    const endValue = 60;
-    const start = performance.now();
-    let rafId = 0;
-
-    const animate = (now: number) => {
-      const progress = Math.min((now - start) / durationMs, 1);
-      setSecondsCount(Math.round(endValue * progress));
-
-      if (progress < 1) {
-        rafId = window.requestAnimationFrame(animate);
-      }
-    };
-
-    rafId = window.requestAnimationFrame(animate);
-    return () => window.cancelAnimationFrame(rafId);
-  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const context = canvas.getContext("2d");
     if (!context) return;
 
@@ -74,9 +32,7 @@ export default function Home() {
     };
 
     setupCanvas();
-
-    const particleCount = 40;
-    const particles = Array.from({ length: particleCount }, () => ({
+    const particles = Array.from({ length: 40 }, () => ({
       x: Math.random() * canvas.clientWidth,
       y: Math.random() * canvas.clientHeight,
       radius: Math.random() * 1.8 + 0.8,
@@ -86,26 +42,22 @@ export default function Home() {
     let rafId = 0;
     const draw = () => {
       context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-
       for (const particle of particles) {
         particle.y -= particle.speed;
         if (particle.y < -4) {
           particle.y = canvas.clientHeight + 4;
           particle.x = Math.random() * canvas.clientWidth;
         }
-
         context.beginPath();
-        context.fillStyle = "rgba(74, 222, 128, 0.15)";
+        context.fillStyle = "rgba(74, 222, 128, 0.20)";
         context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
         context.fill();
       }
-
       rafId = window.requestAnimationFrame(draw);
     };
 
     rafId = window.requestAnimationFrame(draw);
     window.addEventListener("resize", setupCanvas);
-
     return () => {
       window.cancelAnimationFrame(rafId);
       window.removeEventListener("resize", setupCanvas);
@@ -113,204 +65,229 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#111318] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#0b0f12] text-white">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(74,222,128,0.12),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(71,85,105,0.2),transparent_35%)]" />
+      <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
       <div
-        style={{
-          height: "2px",
-          backgroundColor: "#4ADE80",
-          width: "100%",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          zIndex: 50,
-        }}
+        className="pointer-events-none fixed left-0 top-0 z-50 h-0.5 w-full bg-[#4ADE80]"
+        aria-hidden
       />
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-50"
-      >
-        Skip to content
-      </a>
 
-      <header className="border-b border-white/5">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
+      <header className="fixed left-0 right-0 top-0 z-40 border-b border-white/10 bg-[#0b0f12]/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/15 bg-[#0f151b] font-mono text-xs text-[#4ADE80]">
+              &gt;_
+            </span>
             <span
-              style={{
-                fontSize: "1.5rem",
-                fontWeight: 700,
-                fontFamily: "monospace",
-                color: "#FFFFFF",
-              }}
+              className="text-xl font-bold tracking-tight"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              Scop
-              <span style={{ color: "#4ADE80", fontFamily: "monospace" }}>
-                r
-              </span>
+              Scop<span className="text-[#4ADE80]">r</span>
             </span>
           </div>
-
           <Link
             href="/waitlist"
-            className="inline-flex h-10 items-center justify-center rounded-lg bg-[#4ADE80] px-4 text-sm font-medium text-[#0B1220] transition-colors hover:bg-[#4ADE80]/90"
+            className="inline-flex items-center justify-center rounded-lg bg-[#4ADE80] px-5 py-2 text-sm text-[#0a0a0a]"
+            style={{ fontWeight: 800, letterSpacing: "0.01em" }}
           >
             Get started
           </Link>
         </div>
       </header>
 
-      <main id="main" className="mx-auto w-full max-w-6xl px-6 scroll-smooth">
-        <section className="relative overflow-hidden pt-16 pb-5 md:pt-20 md:pb-6">
+      <main className="relative pt-24">
+        <section className="relative px-6 pb-16 pt-10">
           <canvas
             ref={canvasRef}
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 z-0 h-full w-full"
           />
-          <div className="relative z-10 max-w-2xl">
-            <TerminalComment text="// validate your idea in 60 seconds" />
-
-            <h1 className="mt-4 min-h-[6rem] text-4xl font-semibold leading-tight tracking-tight text-white">
-              {typedHeadline}
-              {!isTypingDone && (
-                <span aria-hidden="true" className="typewriter-cursor ml-1">
-                  |
+          <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-center">
+            <div>
+              <TerminalComment text="// validation engine online" />
+              <h1
+                className="mt-6 text-5xl font-bold leading-[1.05] tracking-tight text-white md:text-6xl"
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+              >
+                Know which idea to{" "}
+                <span className="bg-gradient-to-r from-[#4ADE80] to-[#b4f5cd] bg-clip-text text-transparent">
+                  build next
                 </span>
-              )}
-            </h1>
+              </h1>
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">
+                Stop guessing which idea to pursue. Answer 7 questions and get
+                an AI verdict — in 60 seconds.
+              </p>
+              <Link
+                href="/waitlist"
+                className="mt-8 inline-flex items-center justify-center rounded-xl bg-[#4ADE80] px-7 py-4 text-base text-[#0a0a0a]"
+                style={{ fontWeight: 800, letterSpacing: "0.01em" }}
+              >
+                Join the waitlist →
+              </Link>
+            </div>
 
-            <p className="mt-5 text-lg leading-7 text-white/70">
-              Answer 7 questions. Get a market verdict. Know if it&apos;s worth
-              building.
-            </p>
-
-            <Link
-              href="/waitlist"
-              className="mt-10 inline-flex h-12 items-center justify-center rounded-xl bg-[#4ADE80] px-6 text-base font-medium text-[#0B1220] transition-colors hover:bg-[#4ADE80]/90"
-            >
-              Analyse my idea free
-            </Link>
-
-            <p className="mt-4 text-sm text-white/65">
-              <span className="font-mono text-[#4ADE80]">{secondsCount}</span>{" "}
-              seconds to your verdict
-            </p>
+            <div className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(19,24,31,0.95),rgba(10,13,18,0.95))] p-5 shadow-[0_24px_100px_rgba(0,0,0,0.45)]">
+              <div className="mb-4 flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#ef4444]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#f59e0b]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#22c55e]" />
+              </div>
+              <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-[0.85rem] leading-7 text-[#d7e3eb]">
+{`~ scopr validate --idea "An app for new dads during pregnancy"
+[SYSTEM] Initialising validation engine...
+[ANALYSIS] Market size: Large. Competition: Medium.
+[FOUNDER] Fit score: High. Enjoyment signal: Strong.
+[VERDICT] BUILD_IT — confidence 91.4%
+// VALIDATION_COMPLETE (47.2s)
+~ SCOPE_READY_FOR_EXPORT_█`}
+              </pre>
+            </div>
           </div>
         </section>
 
-        <section id="how-it-works" className="py-6 md:py-7 scroll-mt-24">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+        <section className="px-6 py-14">
+          <div className="mx-auto w-full max-w-6xl">
             <TerminalComment text="// powered by ai" />
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white/90">
+            <h2
+              className="mt-3 text-4xl font-bold tracking-tight text-white"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}
+            >
               How it works
             </h2>
-
-            <div className="mt-7 grid gap-4 md:grid-cols-3">
-              <div className="lift-card accent-green-soft rounded-xl border border-white/10 border-l-2 bg-[#1c1c1e] p-8">
+            <div className="mt-8 grid gap-5 md:grid-cols-3">
+              <article className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6">
                 <p className="font-mono text-xs text-[#4ADE80]">01</p>
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="mt-3 text-xl font-semibold text-white">
                   Drop in your idea
                 </h3>
-                <p className="mt-2 text-sm text-white/60">
-                  Share your startup concept in one clear sentence.
+                <p className="mt-2 text-sm leading-relaxed text-white/70">
+                  Describe your app concept in one sentence. No lengthy forms.
                 </p>
-              </div>
-              <div className="lift-card accent-green-soft rounded-xl border border-white/10 border-l-2 bg-[#1c1c1e] p-8">
+              </article>
+              <article className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6">
                 <p className="font-mono text-xs text-[#4ADE80]">02</p>
-                <h3 className="text-lg font-semibold text-white">
-                  Answer 7 quick questions
+                <h3 className="mt-3 text-xl font-semibold text-white">
+                  Answer 7 questions
                 </h3>
-                <p className="mt-2 text-sm text-white/60">
-                  Add context on customer pain, market, and distribution.
+                <p className="mt-2 text-sm leading-relaxed text-white/70">
+                  Cover the problem, customer, market, competition and your
+                  founder fit.
                 </p>
-              </div>
-              <div className="lift-card accent-green-soft rounded-xl border border-white/10 border-l-2 bg-[#1c1c1e] p-8">
+              </article>
+              <article className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6">
                 <p className="font-mono text-xs text-[#4ADE80]">03</p>
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="mt-3 text-xl font-semibold text-white">
                   Get your verdict
                 </h3>
-                <p className="mt-2 text-sm text-white/60">
-                  Receive a fast recommendation on what to do next.
+                <p className="mt-2 text-sm leading-relaxed text-white/70">
+                  Receive a market score, founder score and one clear AI
+                  decision.
                 </p>
-              </div>
+              </article>
             </div>
-          </motion.div>
+          </div>
         </section>
 
-        <section
-          id="ai-decisions"
-          className="py-12 md:py-14 border-y border-white/5 scroll-mt-24"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <TerminalComment text="// your verdict" />
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white/90">
-              AI decisions
+        <section className="px-6 py-14">
+          <div className="mx-auto w-full max-w-6xl">
+            <h2
+              className="text-4xl font-bold tracking-tight text-white"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}
+            >
+              The verdict system
             </h2>
+            <p className="mt-3 text-lg text-white/70">
+              Every idea gets one of three outcomes — no ambiguity.
+            </p>
 
-            <div className="mt-7 grid gap-4 md:grid-cols-3">
-              <div className="lift-card accent-green rounded-xl border border-white/10 border-l-2 bg-[#1c1c1e] p-8">
-                <h3 className="text-lg font-semibold text-white">Build it</h3>
-                <p className="mt-2 text-sm text-white/60">
-                  Your idea has strong market signals. Time to build.
+            <div className="mt-8 grid gap-5 md:grid-cols-3">
+              <article className="landing-card-hover rounded-2xl border border-[#4ADE80]/30 bg-[linear-gradient(180deg,rgba(74,222,128,0.12),rgba(17,19,24,0.35))] p-6">
+                <p className="font-mono text-xs tracking-wide text-[#4ADE80]">
+                  PROBABILITY: HIGH
                 </p>
-              </div>
-              <div className="lift-card accent-amber rounded-xl border border-white/10 border-l-2 bg-[#1c1c1e] p-8">
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="mt-3 text-xl font-semibold text-white">
+                  Build it
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/75">
+                  Strong market signals. High founder fit. Time to build.
+                </p>
+              </article>
+              <article className="landing-card-hover rounded-2xl border border-[#f59e0b]/30 bg-[linear-gradient(180deg,rgba(245,158,11,0.12),rgba(17,19,24,0.35))] p-6">
+                <p className="font-mono text-xs tracking-wide text-[#fbbf24]">
+                  PROBABILITY: MEDIUM
+                </p>
+                <h3 className="mt-3 text-xl font-semibold text-white">
                   Needs refinement
                 </h3>
-                <p className="mt-2 text-sm text-white/60">
-                  A few gaps to address before committing.
+                <p className="mt-2 text-sm leading-relaxed text-white/75">
+                  Gaps detected. Address these before committing time and money.
                 </p>
-              </div>
-              <div className="lift-card accent-gray rounded-xl border border-white/10 border-l-2 bg-[#1c1c1e] p-8">
-                <h3 className="text-lg font-semibold text-white">
+              </article>
+              <article className="landing-card-hover rounded-2xl border border-[#9ca3af]/30 bg-[linear-gradient(180deg,rgba(156,163,175,0.10),rgba(17,19,24,0.35))] p-6">
+                <p className="font-mono text-xs tracking-wide text-[#d1d5db]">
+                  PROBABILITY: LOW
+                </p>
+                <h3 className="mt-3 text-xl font-semibold text-white">
                   Revisit later
                 </h3>
-                <p className="mt-2 text-sm text-white/60">
-                  Not the right moment. We&apos;ll remind you when to revisit.
+                <p className="mt-2 text-sm leading-relaxed text-white/75">
+                  Not the right moment. Saved to your vault with a reminder.
                 </p>
-              </div>
+              </article>
             </div>
-          </motion.div>
+          </div>
         </section>
 
-        <section
-          id="final-cta"
-          className="py-16 md:py-20 border-b border-white/5 scroll-mt-24"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="mx-auto max-w-2xl text-center md:text-left">
-              <TerminalComment text="// ready to build?" />
-              <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-white">
-                You have a rough idea. Scopr turns it into a polished app plan
-                in 60 seconds.
-              </h2>
-              <div className="mt-10">
-                <Link
-                  href="/waitlist"
-                  className="inline-flex h-12 items-center justify-center rounded-xl bg-[#4ADE80] px-6 text-base font-medium text-[#0B1220] transition-colors hover:bg-[#4ADE80]/90"
-                >
-                  Analyse my idea free
-                </Link>
-              </div>
-            </div>
-          </motion.div>
+        <section className="px-6 py-16">
+          <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(16,22,30,0.95),rgba(8,11,16,0.95))] p-10 text-center">
+            <TerminalComment text="// waitlist_open" />
+            <h2
+              className="mx-auto mt-5 max-w-2xl text-4xl font-bold leading-tight text-white"
+              style={{ fontFamily: "var(--font-space-grotesk)" }}
+            >
+              Know which idea to build next — in 60 seconds.
+            </h2>
+            <Link
+              href="/waitlist"
+              className="mt-8 inline-flex items-center justify-center rounded-xl bg-[#4ADE80] px-7 py-4 text-base text-[#0a0a0a]"
+              style={{ fontWeight: 800, letterSpacing: "0.01em" }}
+            >
+              Join the waitlist →
+            </Link>
+          </div>
         </section>
       </main>
+
+      <footer className="border-t border-white/10 px-6 py-8">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
+            <span className="font-semibold text-white">Scopr</span>
+            <span className="font-mono text-xs text-[#4ADE80]">
+              // 0x4F2 SYSTEM_READY
+            </span>
+          </div>
+          <div className="flex items-center gap-5">
+            <a
+              href="https://x.com/tryscopr"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-white"
+            >
+              X
+            </a>
+            <a
+              href="https://threads.net/@tryscopr"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-white"
+            >
+              Threads
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
