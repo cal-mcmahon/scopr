@@ -2,12 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { wordmark } from "@/lib/design-system";
 
 function TerminalComment({ text }: { text: string }) {
   return (
     <p className="font-mono text-[0.875rem] leading-normal text-[#4ADE80]">
       {text}
-      <span aria-hidden="true" className="terminal-cursor">
+      <span
+        aria-hidden="true"
+        className="terminal-cursor"
+        style={{ fontSize: "0.75rem" }}
+      >
         █
       </span>
     </p>
@@ -16,6 +21,25 @@ function TerminalComment({ text }: { text: string }) {
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const ctaStyle = {
+    backgroundColor: "#4ADE80",
+    color: "#0a0a0a",
+    fontFamily: '"Space Grotesk", sans-serif',
+    fontWeight: 700,
+    fontSize: "0.875rem",
+    letterSpacing: "0.05em",
+    textTransform: "uppercase",
+    borderRadius: "2px",
+    height: "48px",
+    padding: "0 32px",
+    border: "none",
+    cursor: "pointer",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "8px",
+    textDecoration: "none",
+  } as const;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -75,21 +99,15 @@ export default function Home() {
 
       <header className="fixed left-0 right-0 top-0 z-40 border-b border-white/10 bg-[#0b0f12]/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/15 bg-[#0f151b] font-mono text-xs text-[#4ADE80]">
-              &gt;_
-            </span>
-            <span
-              className="text-xl font-bold tracking-tight"
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
-            >
-              Scop<span className="text-[#4ADE80]">r</span>
+          <div style={wordmark.container}>
+            <div style={wordmark.icon}>&gt;_</div>
+            <span style={wordmark.text}>
+              Scop<span style={wordmark.accent}>r</span>
             </span>
           </div>
           <Link
             href="/waitlist"
-            className="inline-flex items-center justify-center rounded-lg bg-[#4ADE80] px-5 py-2 text-sm text-[#0a0a0a]"
-            style={{ fontWeight: 800, letterSpacing: "0.01em" }}
+            style={ctaStyle}
           >
             Get started
           </Link>
@@ -97,12 +115,21 @@ export default function Home() {
       </header>
 
       <main className="relative pt-24">
-        <section className="relative px-6 pb-16 pt-10">
-          <canvas
-            ref={canvasRef}
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-0 h-full w-full"
-          />
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+            zIndex: 0,
+          }}
+        />
+        <div className="relative z-10">
+          <section className="px-6 pb-16 pt-10">
           <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-center">
             <div>
               <TerminalComment text="// validation engine online" />
@@ -119,13 +146,11 @@ export default function Home() {
                 Stop guessing which idea to pursue. Answer 7 questions and get
                 an AI verdict — in 60 seconds.
               </p>
-              <Link
-                href="/waitlist"
-                className="mt-8 inline-flex items-center justify-center rounded-xl bg-[#4ADE80] px-7 py-4 text-base text-[#0a0a0a]"
-                style={{ fontWeight: 800, letterSpacing: "0.01em" }}
-              >
-                Join the waitlist →
-              </Link>
+              <div className="mt-8">
+                <Link href="/waitlist" style={ctaStyle}>
+                  Join the waitlist →
+                </Link>
+              </div>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(19,24,31,0.95),rgba(10,13,18,0.95))] p-5 shadow-[0_24px_100px_rgba(0,0,0,0.45)]">
@@ -145,9 +170,9 @@ export default function Home() {
               </pre>
             </div>
           </div>
-        </section>
+          </section>
 
-        <section className="px-6 py-14">
+          <section className="px-6 py-14">
           <div className="mx-auto w-full max-w-6xl">
             <TerminalComment text="// powered by ai" />
             <h2
@@ -188,9 +213,9 @@ export default function Home() {
               </article>
             </div>
           </div>
-        </section>
+          </section>
 
-        <section className="px-6 py-14">
+          <section className="px-6 py-14">
           <div className="mx-auto w-full max-w-6xl">
             <h2
               className="text-4xl font-bold tracking-tight text-white"
@@ -238,26 +263,38 @@ export default function Home() {
               </article>
             </div>
           </div>
-        </section>
+          </section>
 
-        <section className="px-6 py-16">
+          <section className="px-6 py-16">
           <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(16,22,30,0.95),rgba(8,11,16,0.95))] p-10 text-center">
-            <TerminalComment text="// waitlist_open" />
+            <p className="font-mono text-[0.875rem] leading-normal text-[#4ADE80]">
+              // waitlist_open
+              <span
+                aria-hidden="true"
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#4ADE80",
+                  animation: "terminal-blink 600ms steps(1, end) infinite",
+                  marginLeft: "2px",
+                }}
+              >
+                █
+              </span>
+            </p>
             <h2
               className="mx-auto mt-5 max-w-2xl text-4xl font-bold leading-tight text-white"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
               Know which idea to build next — in 60 seconds.
             </h2>
-            <Link
-              href="/waitlist"
-              className="mt-8 inline-flex items-center justify-center rounded-xl bg-[#4ADE80] px-7 py-4 text-base text-[#0a0a0a]"
-              style={{ fontWeight: 800, letterSpacing: "0.01em" }}
-            >
-              Join the waitlist →
-            </Link>
+            <div className="mt-8">
+              <Link href="/waitlist" style={ctaStyle}>
+                Join the waitlist →
+              </Link>
+            </div>
           </div>
-        </section>
+          </section>
+        </div>
       </main>
 
       <footer className="border-t border-white/10 px-6 py-8">

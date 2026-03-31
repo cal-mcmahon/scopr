@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { buttons, inputs, wordmark } from "@/lib/design-system";
 
 const WORDMARK = "Scopr";
 const TAGLINE =
@@ -129,7 +130,9 @@ export default function WaitlistPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#111318] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#0b0f12] text-white">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(74,222,128,0.12),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(71,85,105,0.2),transparent_35%)]" />
+      <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
       <div
         style={{
           height: "2px",
@@ -160,11 +163,29 @@ export default function WaitlistPage() {
           </div>
 
           <div
-            className="font-bold leading-none tracking-tight text-white"
-            style={{ fontFamily: MONO, fontSize: "4rem" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "16px",
+              justifyContent: "center",
+            }}
           >
-            {WORDMARK.slice(0, -1)}
-            <span style={{ color: "#4ADE80", fontFamily: MONO }}>r</span>
+            <div
+              style={{
+                ...wordmark.icon,
+                width: "56px",
+                height: "56px",
+                fontSize: "1.1rem",
+                borderRadius: "12px",
+                boxShadow:
+                  "0 0 20px rgba(74, 222, 128, 0.2), 0 0 40px rgba(74, 222, 128, 0.08)",
+              }}
+            >
+              &gt;_
+            </div>
+            <span style={{ ...wordmark.text, fontSize: "4rem" }}>
+              Scop<span style={wordmark.accent}>r</span>
+            </span>
           </div>
 
           <p className="mt-8 text-lg leading-7 text-white/85">{typedTagline}</p>
@@ -187,21 +208,23 @@ export default function WaitlistPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onFocus={(e) => {
-                  e.target.style.boxShadow = "0 0 0 2px #4ADE80";
+                  e.target.style.boxShadow = "0 0 0 1px #4ADE80";
                 }}
                 onBlur={(e) => {
-                  e.target.style.boxShadow = "none";
+                  e.target.style.boxShadow = "0 0 0 1px rgba(134, 148, 134, 0.2)";
                 }}
                 placeholder="your@email.com"
                 autoComplete="email"
                 inputMode="email"
                 disabled={isSubmitting}
-                className="h-[52px] w-full rounded-xl border border-white/10 bg-[#1c1c1e] px-4 text-base text-white placeholder:text-white/40 outline-none transition-shadow focus:border-[#4ADE80]/40 focus:ring-2 focus:ring-[#4ADE80]/25"
+                className="placeholder:text-white/40"
+                style={inputs.default}
               />
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex h-[52px] shrink-0 items-center justify-center rounded-xl bg-[#4ADE80] px-8 text-base font-semibold text-[#111318] transition-opacity hover:opacity-90 disabled:opacity-70"
+                className="disabled:opacity-70"
+                style={buttons.primary}
               >
                 {isSubmitting ? "Joining..." : "Join waitlist →"}
               </button>
