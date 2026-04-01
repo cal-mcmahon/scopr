@@ -166,7 +166,7 @@ export default function Home() {
 [SYSTEM] Initialising validation engine...
 [ANALYSIS] Market size: Large. Competition: Medium.
 [FOUNDER] Fit score: High. Enjoyment signal: Strong.
-[VERDICT] BUILD_IT — confidence 91.4%
+[DECISION] BUILD_IT — confidence 91.4%
 // VALIDATION_COMPLETE (47.2s)
 ~ SCOPE_READY_FOR_EXPORT_█`}
               </pre>
@@ -207,7 +207,7 @@ export default function Home() {
               <article className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6">
                 <p className="font-mono text-xs text-[#4ADE80]">03</p>
                 <h3 className="mt-3 text-xl font-semibold text-white">
-                  Get your verdict
+                  Get your decision
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
                   A clear AI decision tells you whether to build it, refine it,
@@ -220,7 +220,7 @@ export default function Home() {
 
           <section className="px-6 py-14">
           <div className="mx-auto w-full max-w-6xl">
-            <TerminalComment text="// your verdict, instantly" />
+            <TerminalComment text="// your decision, instantly" />
             <h2
               className="text-4xl font-bold tracking-tight text-white"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
