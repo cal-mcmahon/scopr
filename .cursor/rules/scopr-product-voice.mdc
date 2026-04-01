@@ -44,3 +44,55 @@ Treat Scopr like a smart, supportive mate: "you can do this, here's where to sta
 ## Words To Avoid
 
 Do not use words like: leverage, utilise, synergy, scalable, robust.
+
+## Design system
+- Background: #111318
+- Surface: #1a1b21
+- Accent: #4ADE80
+- Text primary: #e2e2e9
+- Text muted: rgba(188, 202, 187, 0.6)
+- Border: rgba(255, 255, 255, 0.06)
+- Button: bg #4ADE80, text #0a0a0a, font-weight 700, rounded-sm
+- Font mono: JetBrains Mono
+- Font body: Inter
+- Font label: Space Grotesk
+- Terminal grid background on all pages
+- Particle animation in hero/centrepiece sections
+
+## Project info
+- Product: Scopr — AI idea validation for non-technical people
+- Tagline: "For people with lots of ideas but no idea where to start."
+- Live at: tryscopr.com
+- Stack: Next.js (app router), Tailwind CSS, Supabase, Claude API, Vercel
+
+## Wordmark
+Always render as: >_ Scopr where "Scop" is white and "r" is #4ADE80
+The >_ sits in a small dark rounded square with a subtle border
+
+## Pages already built
+- app/page.tsx — landing page
+- app/waitlist/page.js — waitlist with Supabase email capture
+- app/auth/page.js — auth with email/password, Google OAuth, magic link
+
+## Supabase tables
+- waitlist — id, email, created_at
+- profiles — id, username, display_name, email, created_at
+- ideas — id, user_id, title, description, status (build/refine/refine), confidence_score, created_at
+
+## Glass card effect
+background: rgba(26, 27, 33, 0.8) with backdrop-filter: blur(8px)
+
+## The three decisions (never call them verdicts)
+- Build it — strong signals, high founder fit, high Q7 enthusiasm
+- Needs refinement — addressable gaps, fixable in 2-4 weeks, Q7 must be high
+- Revisit later — structural issues or low Q7. You cannot refine your way to passion.
+
+## Security rules
+- Always use RLS on every Supabase table
+- Never expose service role key — anon key only in frontend
+- All keys in .env.local — never commit to GitHub
+- Auth protect all pages except /, /waitlist, /auth
+
+## The product philosophy
+Compete on confidence not features.
+Every screen should ask: does this make the user feel more confident about their idea?
