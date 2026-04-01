@@ -137,19 +137,17 @@ export default function Home() {
   className="mt-6 text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl"
   style={{ fontFamily: "var(--font-space-grotesk)" }}
 >
-  <span className="text-white">Got an idea? Find out if it's </span>
-  <span style={{
-  background: 'linear-gradient(to right, #4ADE80, #dcfce7)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  backgroundClip: 'text',
-  display: 'inline',
-}}>worth building.</span>
+  <span className="text-white">Lots of ideas. No idea where to start.</span>
 </h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">
-                No coding. No developers. No jargon. Answer 7 simple questions
-                and Scopr tells you exactly what to do next.
-              </p>
+<p className="...">
+  Scopr tells you which one is <span style={{
+    background: 'linear-gradient(to right, #4ADE80, #dcfce7)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+    display: 'inline',
+  }}>worth building</span> — in 60 seconds.
+</p>
               <div className="mt-8">
                 <Link href="/waitlist" style={ctaStyle}>
                   Validate my idea →

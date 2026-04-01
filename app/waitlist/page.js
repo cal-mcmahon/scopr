@@ -6,7 +6,7 @@ import { buttons, inputs, wordmark } from "@/lib/design-system";
 
 const WORDMARK = "Scopr";
 const TAGLINE =
-  "Got a lot of ideas but don't know where to start?";
+  "Got lots of ideas but no idea where to start?";
 
 const MONO =
   "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace";
@@ -191,8 +191,7 @@ export default function WaitlistPage() {
           <p className="mt-8 text-lg leading-7 text-white/85">{typedTagline}</p>
 
           <p className="mt-5 text-sm text-white/60">
-            Scopr helps you figure out which one is worth building — no
-            technical skills needed.
+          Join the waitlist and be first to find out.
           </p>
 
           {!isSuccess ? (
