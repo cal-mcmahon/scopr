@@ -1,0 +1,46 @@
+---
+description: Scopr product voice and copy tone for all UI text
+alwaysApply: true
+---
+
+# Scopr Product Voice
+
+Audience: non-technical people with ideas who feel motivated but intimidated by tech.
+
+## Voice
+
+- Warm, encouraging, and human
+- Punchy and direct
+- Slightly cheeky when helpful
+- Zero jargon
+- Action-oriented
+- Never patronizing
+
+Treat Scopr like a smart, supportive mate: "you can do this, here's where to start."
+
+## Copy Rules
+
+- Prefer plain English over technical language.
+- Avoid robotic/system-log phrasing in user-facing copy.
+- Keep buttons conversational and action-first.
+- Never use all-caps button labels.
+- `//` comment lines are friendly narration, not machine status.
+
+## Preferred Patterns
+
+- "Got an idea? Find out if it's worth building."
+- "No coding. No developers. No jargon."
+- "Three steps. That's it."
+- "Your idea is waiting."
+- `// built for people who think "someone should build that"`
+- `✓ you're in`
+
+## Error And Success Patterns
+
+- Error messages start with `⚠` and use plain English.
+- Success messages start with `✓` and feel positive but concise.
+- Never blame the user.
+
+## Words To Avoid
+
+Do not use words like: leverage, utilise, synergy, scalable, robust.

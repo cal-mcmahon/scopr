@@ -72,7 +72,7 @@ export default function AuthPage() {
     setSuccessMessage("");
 
     if (!email.trim()) {
-      setErrorMessage("please enter your email address first");
+      setErrorMessage("⚠ please enter your email address");
       return;
     }
 
@@ -86,11 +86,15 @@ export default function AuthPage() {
     setLoadingAction("");
 
     if (error) {
-      setErrorMessage(error.message);
+      if (/rate limit|too many/i.test(error.message || "")) {
+        setErrorMessage("⚠ too many attempts — please try again in a few minutes");
+      } else {
+        setErrorMessage("⚠ something went wrong — please try again");
+      }
       return;
     }
 
-    setSuccessMessage("// magic_link_sent — Check your email for your login link.");
+    setSuccessMessage("✓ magic link sent — Check your email for your login link.");
   }
 
   async function handleGoogle() {
@@ -104,7 +108,11 @@ export default function AuthPage() {
     setLoadingAction("");
 
     if (error) {
-      setErrorMessage(error.message);
+      if (/rate limit|too many/i.test(error.message || "")) {
+        setErrorMessage("⚠ too many attempts — please try again in a few minutes");
+      } else {
+        setErrorMessage("⚠ something went wrong — please try again");
+      }
     }
   }
 
@@ -141,7 +149,11 @@ export default function AuthPage() {
     setLoadingAction("");
 
     if (error) {
-      setErrorMessage(error.message);
+      if (/rate limit|too many/i.test(error.message || "")) {
+        setErrorMessage("⚠ too many attempts — please try again in a few minutes");
+      } else {
+        setErrorMessage("⚠ something went wrong — please try again");
+      }
       return;
     }
 
@@ -159,7 +171,7 @@ export default function AuthPage() {
           return;
         }
       }
-      setSuccessMessage("// account_created ✓");
+      setSuccessMessage("✓ account created — check your email to confirm");
       return;
     }
 
@@ -172,7 +184,7 @@ export default function AuthPage() {
     setSuccessMessage("");
 
     if (!email) {
-      setErrorMessage("Enter your email first.");
+      setErrorMessage("⚠ please enter your email address");
       return;
     }
 
@@ -183,14 +195,18 @@ export default function AuthPage() {
     setLoadingAction("");
 
     if (error) {
-      setErrorMessage(error.message);
+      if (/rate limit|too many/i.test(error.message || "")) {
+        setErrorMessage("⚠ too many attempts — please try again in a few minutes");
+      } else {
+        setErrorMessage("⚠ something went wrong — please try again");
+      }
       return;
     }
 
     setSuccessMessage("// reset_link_sent — check your email.");
   }
 
-  const magicSent = successMessage.startsWith("// magic_link_sent");
+  const magicSent = successMessage.startsWith("✓ magic link sent");
   const resetSent = successMessage.startsWith("// reset_link_sent");
   const isUsernameValid = /^[a-zA-Z0-9_]{3,20}$/.test(username);
   const showUsernameRuleError =
@@ -226,7 +242,7 @@ export default function AuthPage() {
               (e.currentTarget.style.color = "rgba(74, 222, 128, 0.6)")
             }
           >
-            // home
+            ← back to home
           </Link>
         </div>
       </nav>
@@ -254,8 +270,8 @@ export default function AuthPage() {
             </div>
             <div className="font-mono text-[10px] text-[rgba(255,255,255,0.45)]">
               {mode === "signup"
-                ? "// new_user_registration"
-                : "// system_auth_protocol"}
+                ? "// create your account"
+                : "// sign in"}
             </div>
           </div>
 
@@ -297,14 +313,16 @@ export default function AuthPage() {
 
             <div className="mt-6">
               <h1 className="mb-2 font-mono text-[1.25rem] font-bold text-white">
-                {mode === "login" ? "// welcome_back" : "// initialise_account"}
+                {mode === "login"
+                  ? "// welcome back"
+                  : "// let's get started"}
               </h1>
             </div>
 
             <div className="mt-6 space-y-4">
               <div className="space-y-2">
                 <label className="flex justify-between px-1 font-mono text-[10px] uppercase tracking-widest text-[rgba(255,255,255,0.45)]">
-                  <span>EMAIL ADDRESS</span>
+                  <span>Email address</span>
                 </label>
                 <input
                   className="placeholder:text-[rgba(255,255,255,0.35)]"
@@ -328,7 +346,7 @@ export default function AuthPage() {
                   {magicSent ? (
                     <div className="rounded-md border border-[rgba(74,222,128,0.3)] bg-[rgba(74,222,128,0.06)] px-4 py-3">
                       <p className="font-mono text-sm text-[#4ADE80]">
-                        // magic_link_sent ✓
+                        ✓ magic link sent
                       </p>
                       <p className="mt-1 text-sm text-[rgba(255,255,255,0.72)]">
                         Check your email
@@ -348,7 +366,7 @@ export default function AuthPage() {
                       ) : null}
                       <span className="font-mono">
                         {loadingAction === "magic"
-                          ? "// sending..."
+                          ? "Sending..."
                           : "Send magic link"}
                       </span>
                     </button>
@@ -385,7 +403,7 @@ export default function AuthPage() {
                       />
                     </svg>
                     {loadingAction === "google"
-                      ? "// processing..."
+                      ? "Sending..."
                       : "Continue with Google"}
                   </button>
 
@@ -424,15 +442,15 @@ export default function AuthPage() {
                   <form className="space-y-4 pt-2" onSubmit={handlePasswordAuth}>
                     <div className="space-y-2">
                       <label className="flex justify-between px-1 font-mono text-[10px] uppercase tracking-widest text-[rgba(255,255,255,0.45)]">
-                        <span>PASSWORD</span>
+                        <span>Password</span>
                         <button
                           className="normal-case tracking-normal text-[rgba(74,222,128,0.7)] transition-colors hover:text-[#4ADE80]"
                           onClick={handleForgotPassword}
                           type="button"
                         >
                           {loadingAction === "reset"
-                            ? "// processing..."
-                            : "// forgot password?"}
+                            ? "Sending..."
+                            : "forgot password?"}
                         </button>
                       </label>
                       <input
@@ -468,7 +486,7 @@ export default function AuthPage() {
                       type="submit"
                       style={buttons.secondary}
                     >
-                      {loadingAction === "password" ? "// processing..." : "Sign in"}
+                      {loadingAction === "password" ? "Sending..." : "Sign in →"}
                     </button>
                   </form>
                 </div>
@@ -476,7 +494,7 @@ export default function AuthPage() {
                 <form className="space-y-4" onSubmit={handlePasswordAuth}>
                   <div className="space-y-2">
                     <label className="flex justify-between px-1 font-mono text-[10px] uppercase tracking-widest text-[rgba(255,255,255,0.45)]">
-                      <span>USERNAME</span>
+                      <span>Username</span>
                     </label>
                     <input
                       className="placeholder:text-[rgba(255,255,255,0.35)]"
@@ -495,7 +513,7 @@ export default function AuthPage() {
                     />
                     {isUsernameValid && username.length > 0 ? (
                       <p className="font-mono text-xs text-[#4ADE80]">
-                        // username_valid ✓
+                        ✓ username available
                       </p>
                     ) : null}
                     {showUsernameRuleError ? (
@@ -508,7 +526,7 @@ export default function AuthPage() {
 
                   <div className="space-y-2">
                     <label className="flex justify-between px-1 font-mono text-[10px] uppercase tracking-widest text-[rgba(255,255,255,0.45)]">
-                      <span>CREATE PASSWORD</span>
+                      <span>Create a password</span>
                     </label>
                     <input
                       className="placeholder:text-[rgba(255,255,255,0.35)]"
@@ -529,7 +547,7 @@ export default function AuthPage() {
 
                   <div className="space-y-2">
                     <label className="flex justify-between px-1 font-mono text-[10px] uppercase tracking-widest text-[rgba(255,255,255,0.45)]">
-                      <span>CONFIRM PASSWORD</span>
+                      <span>Confirm your password</span>
                     </label>
                     <input
                       className="placeholder:text-[rgba(255,255,255,0.35)]"
@@ -554,17 +572,17 @@ export default function AuthPage() {
                     style={buttons.primary}
                   >
                     {loadingAction === "password"
-                      ? "// processing..."
-                      : "Create account"}
+                      ? "Sending..."
+                      : "Create my account →"}
                   </button>
 
-                  {successMessage === "// account_created ✓" ? (
+                  {successMessage === "✓ account created — check your email to confirm" ? (
                     <div className="rounded-md border border-[rgba(74,222,128,0.3)] bg-[rgba(74,222,128,0.06)] px-4 py-3">
                       <p className="font-mono text-sm text-[#4ADE80]">
-                        // account_created ✓
+                        ✓ account created — check your email to confirm
                       </p>
                       <p className="mt-1 text-sm text-[rgba(255,255,255,0.72)]">
-                        Check your email to confirm your account.
+                        You're all set.
                       </p>
                     </div>
                   ) : null}
@@ -573,11 +591,7 @@ export default function AuthPage() {
 
               {errorMessage ? (
                 <p className="font-mono text-xs text-[#ff6b6b]">
-                  {`// error: ${
-                    errorMessage.includes("email or phone")
-                      ? "please enter your email address first"
-                      : errorMessage
-                  }`}
+                  {errorMessage}
                 </p>
               ) : null}
             </div>

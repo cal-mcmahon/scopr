@@ -109,7 +109,7 @@ export default function Home() {
             href="/waitlist"
             style={ctaStyle}
           >
-            Get started
+            Get started →
           </Link>
         </div>
       </header>
@@ -132,23 +132,27 @@ export default function Home() {
           <section className="px-6 pb-16 pt-10">
           <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-center">
             <div>
-              <TerminalComment text="// validation engine online" />
+              <TerminalComment text="// no coding required" />
               <h1
-                className="mt-6 text-5xl font-bold leading-[1.05] tracking-tight text-white md:text-6xl"
-                style={{ fontFamily: "var(--font-space-grotesk)" }}
-              >
-                Know which idea to{" "}
-                <span className="bg-gradient-to-r from-[#4ADE80] to-[#b4f5cd] bg-clip-text text-transparent">
-                  build next
-                </span>
-              </h1>
+  className="mt-6 text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl"
+  style={{ fontFamily: "var(--font-space-grotesk)" }}
+>
+  <span className="text-white">Got an idea? Find out if it's </span>
+  <span style={{
+  background: 'linear-gradient(to right, #4ADE80, #dcfce7)',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  backgroundClip: 'text',
+  display: 'inline',
+}}>worth building.</span>
+</h1>
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">
-                Stop guessing which idea to pursue. Answer 7 questions and get
-                an AI verdict — in 60 seconds.
+                No coding. No developers. No jargon. Answer 7 simple questions
+                and Scopr tells you exactly what to do next.
               </p>
               <div className="mt-8">
                 <Link href="/waitlist" style={ctaStyle}>
-                  Join the waitlist →
+                  Validate my idea →
                 </Link>
               </div>
             </div>
@@ -174,31 +178,32 @@ export default function Home() {
 
           <section className="px-6 py-14">
           <div className="mx-auto w-full max-w-6xl">
-            <TerminalComment text="// powered by ai" />
+            <TerminalComment text="// how it works" />
             <h2
               className="mt-3 text-4xl font-bold tracking-tight text-white"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              How it works
+              Three steps. That's it.
             </h2>
             <div className="mt-8 grid gap-5 md:grid-cols-3">
               <article className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6">
                 <p className="font-mono text-xs text-[#4ADE80]">01</p>
                 <h3 className="mt-3 text-xl font-semibold text-white">
-                  Drop in your idea
+                  Share your idea
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
-                  Describe your app concept in one sentence. No lengthy forms.
+                  Describe it in plain English. One sentence is enough. No
+                  technical knowledge needed.
                 </p>
               </article>
               <article className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6">
                 <p className="font-mono text-xs text-[#4ADE80]">02</p>
                 <h3 className="mt-3 text-xl font-semibold text-white">
-                  Answer 7 questions
+                  Answer 7 simple questions
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
-                  Cover the problem, customer, market, competition and your
-                  founder fit.
+                  We'll ask about the problem, who has it, and why you're the
+                  right person to solve it.
                 </p>
               </article>
               <article className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6">
@@ -207,8 +212,8 @@ export default function Home() {
                   Get your verdict
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
-                  Receive a market score, founder score and one clear AI
-                  decision.
+                  A clear AI decision tells you whether to build it, refine it,
+                  or come back to it later.
                 </p>
               </article>
             </div>
@@ -217,14 +222,15 @@ export default function Home() {
 
           <section className="px-6 py-14">
           <div className="mx-auto w-full max-w-6xl">
+            <TerminalComment text="// your verdict, instantly" />
             <h2
               className="text-4xl font-bold tracking-tight text-white"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              The verdict system
+              No more guessing
             </h2>
             <p className="mt-3 text-lg text-white/70">
-              Every idea gets one of three outcomes — no ambiguity.
+              Every idea gets one of three honest outcomes.
             </p>
 
             <div className="mt-8 grid gap-5 md:grid-cols-3">
@@ -236,7 +242,8 @@ export default function Home() {
                   Build it
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/75">
-                  Strong market signals. High founder fit. Time to build.
+                  Your idea has real potential. We'll show you exactly how to
+                  get started.
                 </p>
               </article>
               <article className="landing-card-hover rounded-2xl border border-[#f59e0b]/30 bg-[linear-gradient(180deg,rgba(245,158,11,0.12),rgba(17,19,24,0.35))] p-6">
@@ -247,7 +254,8 @@ export default function Home() {
                   Needs refinement
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/75">
-                  Gaps detected. Address these before committing time and money.
+                  A few gaps to work through first. We'll tell you what to
+                  focus on.
                 </p>
               </article>
               <article className="landing-card-hover rounded-2xl border border-[#9ca3af]/30 bg-[linear-gradient(180deg,rgba(156,163,175,0.10),rgba(17,19,24,0.35))] p-6">
@@ -258,7 +266,8 @@ export default function Home() {
                   Revisit later
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/75">
-                  Not the right moment. Saved to your vault with a reminder.
+                  Not the right time. We'll save it and remind you when to come
+                  back.
                 </p>
               </article>
             </div>
@@ -268,7 +277,7 @@ export default function Home() {
           <section className="px-6 py-16">
           <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(16,22,30,0.95),rgba(8,11,16,0.95))] p-10 text-center">
             <p className="font-mono text-[0.875rem] leading-normal text-[#4ADE80]">
-              // waitlist_open
+              // now open
               <span
                 aria-hidden="true"
                 style={{
@@ -285,11 +294,11 @@ export default function Home() {
               className="mx-auto mt-5 max-w-2xl text-4xl font-bold leading-tight text-white"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              Know which idea to build next — in 60 seconds.
+              Your idea is waiting. Take 60 seconds to find out if it's worth it.
             </h2>
             <div className="mt-8">
               <Link href="/waitlist" style={ctaStyle}>
-                Join the waitlist →
+                Validate my idea →
               </Link>
             </div>
           </div>
@@ -300,9 +309,9 @@ export default function Home() {
       <footer className="border-t border-white/10 px-6 py-8">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
-            <span className="font-semibold text-white">Scopr</span>
+            <span className="font-semibold text-white">© 2026 Scopr</span>
             <span className="font-mono text-xs text-[#4ADE80]">
-              // 0x4F2 SYSTEM_READY
+              scopr — idea validation engine
             </span>
           </div>
           <div className="flex items-center gap-5">

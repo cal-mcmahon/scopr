@@ -6,7 +6,7 @@ import { buttons, inputs, wordmark } from "@/lib/design-system";
 
 const WORDMARK = "Scopr";
 const TAGLINE =
-  "Know which idea to build next — in 60 seconds.";
+  "Got a lot of ideas but don't know where to start?";
 
 const MONO =
   "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace";
@@ -159,7 +159,7 @@ export default function WaitlistPage() {
 
         <div className="relative z-10 flex w-full max-w-2xl flex-col items-center text-center py-10">
           <div className="mb-5">
-            <TerminalComment text={"// waitlist"} />
+            <TerminalComment text={"// early access"} />
           </div>
 
           <div
@@ -191,7 +191,8 @@ export default function WaitlistPage() {
           <p className="mt-8 text-lg leading-7 text-white/85">{typedTagline}</p>
 
           <p className="mt-5 text-sm text-white/60">
-            Be first in line. Join the waitlist for early access.
+            Scopr helps you figure out which one is worth building — no
+            technical skills needed.
           </p>
 
           {!isSuccess ? (
@@ -226,14 +227,15 @@ export default function WaitlistPage() {
                 className="disabled:opacity-70"
                 style={buttons.primary}
               >
-                {isSubmitting ? "Joining..." : "Join waitlist →"}
+                {isSubmitting ? "Joining..." : "Join the waitlist →"}
               </button>
             </form>
           ) : (
             <div className="mt-10">
-              <TerminalComment text={"// you\u0027re on the list"} />
+              <TerminalComment text={"// you're in"} />
               <p className="mt-2 text-sm text-white/60">
-                We&apos;ll be in touch soon.
+                We'll let you know the moment you can start validating your
+                ideas.
               </p>
             </div>
           )}
@@ -245,7 +247,7 @@ export default function WaitlistPage() {
           ) : null}
 
           <p className="mt-8 text-sm text-white/45">
-            Join founders already building smarter.
+            Join people turning their ideas into real products.
           </p>
 
           <nav className="mt-12 flex items-center gap-6 text-sm text-white/45">
