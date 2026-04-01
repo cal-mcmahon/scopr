@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "Scopr",
-  description: "Validate startup ideas and turn them into a polished app plan in 60 seconds.",
+  description: "Got lots of ideas but no idea where to start? Scopr tells you which one is worth building — in 60 seconds.",
 };
 
 export default function RootLayout({

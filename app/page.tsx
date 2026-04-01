@@ -162,7 +162,7 @@ export default function Home() {
                 <span className="h-2.5 w-2.5 rounded-full bg-[#22c55e]" />
               </div>
               <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-[0.85rem] leading-7 text-[#d7e3eb]">
-{`~ scopr validate --idea "An app for new dads during pregnancy"
+{`~ scopr validate --idea "An app that tells you what to cook from your fridge"
 [SYSTEM] Initialising validation engine...
 [ANALYSIS] Market size: Large. Competition: Medium.
 [FOUNDER] Fit score: High. Enjoyment signal: Strong.
@@ -309,7 +309,7 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <span className="font-semibold text-white">© 2026 Scopr</span>
             <span className="font-mono text-xs text-[#4ADE80]">
-              scopr — idea validation engine
+              scopr — idea decision engine
             </span>
           </div>
           <div className="flex items-center gap-5">
