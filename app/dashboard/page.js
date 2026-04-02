@@ -23,11 +23,7 @@ function confidenceLabel(value) {
 function IdeaCard({ idea, color }) {
   return (
     <div
-      className={`p-5 rounded-xl border-l-[3px] border-y border-r border-[rgba(255,255,255,0.06)]/10 transition-all cursor-pointer group ${color.borderLeft} ${color.hoverRight}`}
-      style={{
-        background: "linear-gradient(180deg,rgba(74,222,128,0.12),rgba(17,19,24,0.35))",
-        backdropFilter: "blur(8px)",
-      }}
+      className={`landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6 border-l-[3px] transition-all cursor-pointer group ${color.borderLeft}`}
     >
       <div className="flex justify-between items-start mb-3">
         <h4 className={`font-headline font-bold text-[#e2e2e9] transition-colors ${color.hoverText}`}>
@@ -219,7 +215,9 @@ export default function DashboardPage() {
             <span
               onClick={() => setActiveTab("revisit")}
               className={`font-mono px-2 py-0.5 rounded cursor-pointer transition-all duration-200 ${
-                activeTab === "revisit" ? "text-[#888780] brightness-125" : "text-[#888780] hover:text-[#888780] brightness-125"
+                activeTab === "revisit"
+                  ? "text-[#888780] brightness-125"
+                  : "text-[#888780] hover:brightness-125"
               }`}
             >
               Revisit
@@ -239,14 +237,21 @@ export default function DashboardPage() {
       </nav>
 
       <div className="flex relative z-10">
-        <aside className="hidden lg:flex bg-[#111318] h-[calc(100vh-72px)] w-64 flex-col gap-4 font-mono text-sm uppercase tracking-widest border-r border-[rgba(255,255,255,0.06)]/10">
+        <aside
+          className="hidden lg:flex h-[calc(100vh-72px)] w-64 flex-col gap-4 font-mono text-sm uppercase tracking-widest border-r border-[rgba(255,255,255,0.06)]/10 rounded-2xl backdrop-blur-md border border-[#9ca3af]/30 overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(180deg,rgba(156,163,175,0.06),rgba(17,19,24,0.20))",
+            backdropFilter: "blur(8px)",
+          }}
+        >
           <div className="p-6" />
           <nav className="flex flex-col gap-1 px-2">
             <a
               className={`py-3 px-4 flex items-center gap-3 transition-all ${
                 activeTab === "dashboard"
                   ? "text-[#4ADE80] bg-[#1a1b21]/30 border-l-2 border-[#4ADE80]"
-                  : "text-[#888780] hover:text-[#4ADE80]"
+                  : "text-[#888780] hover:text-[#4ADE80] border-l-2 border-transparent hover:border-l-2 hover:border-[#4ADE80]"
               }`}
               href="#"
               onClick={(e) => {
@@ -260,8 +265,8 @@ export default function DashboardPage() {
             <a
               className={`py-3 px-4 flex items-center gap-3 transition-colors ${
                 activeTab === "build"
-                  ? "text-[#4ADE80]"
-                  : "text-[#888780] hover:text-[#4ADE80]"
+                  ? "text-[#4ADE80] bg-[#1a1b21]/30 border-l-2 border-[#4ADE80]"
+                  : "text-[#888780] hover:text-[#4ADE80] border-l-2 border-transparent hover:border-l-2 hover:border-[#4ADE80]"
               }`}
               href="#"
               onClick={(e) => {
@@ -275,8 +280,8 @@ export default function DashboardPage() {
             <a
               className={`py-3 px-4 flex items-center gap-3 transition-colors ${
                 activeTab === "refine"
-                  ? "text-[#EF9F27]"
-                  : "text-[#888780] hover:text-[#EF9F27]"
+                  ? "text-[#EF9F27] bg-[#1a1b21]/30 border-l-2 border-[#EF9F27]"
+                  : "text-[#888780] hover:text-[#EF9F27] border-l-2 border-transparent hover:border-l-2 hover:border-[#EF9F27]"
               }`}
               href="#"
               onClick={(e) => {
@@ -290,8 +295,8 @@ export default function DashboardPage() {
             <a
               className={`py-3 px-4 flex items-center gap-3 transition-colors ${
                 activeTab === "revisit"
-                  ? "text-[#888780] brightness-125"
-                  : "text-[#888780] hover:text-[#888780] brightness-125"
+                  ? "text-[#888780] bg-[#1a1b21]/30 border-l-2 border-[#888780] brightness-125"
+                  : "text-[#888780] hover:text-[#888780] border-l-2 border-transparent hover:border-l-2 hover:border-[#888780] brightness-125"
               }`}
               href="#"
               onClick={(e) => {
@@ -334,6 +339,7 @@ export default function DashboardPage() {
               style={{
                 ...buttons.primary,
                 width: "auto",
+                display: "inline-flex",
                 padding: "0 32px",
                 fontSize: "1rem",
                 boxShadow: "0 0 20px rgba(74,222,128,0.2)",
@@ -346,10 +352,9 @@ export default function DashboardPage() {
 
           <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div
-              className="backdrop-blur-md p-6 rounded-xl border border-[#9ca3af]/30"
+              className="landing-card-hover p-6 rounded-2xl border border-[#9ca3af]/30"
               style={{
                 background: "linear-gradient(180deg,rgba(156,163,175,0.10),rgba(17,19,24,0.35))",
-                backdropFilter: "blur(8px)",
               }}
             >
               <div className="text-[#d1d5db] font-mono text-xs mb-2">// TOTAL_IDEAS</div>
@@ -357,10 +362,9 @@ export default function DashboardPage() {
               <div className="text-[rgba(188,202,187,0.6)] text-sm mt-1">Across all lifecycle stages</div>
             </div>
             <div
-              className="backdrop-blur-md p-6 rounded-xl border border-[#4ADE80]/30"
+              className="landing-card-hover p-6 rounded-2xl border border-[#4ADE80]/30"
               style={{
                 background: "linear-gradient(180deg,rgba(74,222,128,0.12),rgba(17,19,24,0.35))",
-                backdropFilter: "blur(8px)",
               }}
             >
               <div className="text-[#4ADE80] font-mono text-xs mb-2">// READY_TO_BUILD</div>
@@ -368,10 +372,9 @@ export default function DashboardPage() {
               <div className="text-[rgba(188,202,187,0.6)] text-sm mt-1">High confidence signals</div>
             </div>
             <div
-              className="backdrop-blur-md p-6 rounded-xl border border-[#f59e0b]/30"
+              className="landing-card-hover p-6 rounded-2xl border border-[#f59e0b]/30"
               style={{
                 background: "linear-gradient(180deg,rgba(245,158,11,0.12),rgba(17,19,24,0.35))",
-                backdropFilter: "blur(8px)",
               }}
             >
               <div className="text-[#EF9F27] font-mono text-xs mb-2">// IN_REFINEMENT</div>
@@ -408,13 +411,12 @@ export default function DashboardPage() {
                   ))
                 ) : (
                   <div
-                    className="p-12 rounded-xl border-l-[3px] border-l-[#4ADE80] border-y border-r border-dashed border-[rgba(255,255,255,0.06)]/30 flex flex-col items-center justify-center text-center"
-                    style={{ background: "rgba(26, 27, 33, 0.8)", backdropFilter: "blur(8px)" }}
+                    className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6 border-l-[3px] border-l-[#4ADE80] flex flex-col items-center justify-center text-center"
                   >
                     <span className="text-4xl text-[#4ADE80] mb-4 opacity-50">⏳</span>
-                    <div className="text-[#4ADE80] font-mono text-sm">// no ideas here yet</div>
+                    <div className="text-[#4ADE80] font-mono text-sm">// no ideas ready to build yet</div>
                     <p className="text-[rgba(188,202,187,0.6)] text-xs mt-2 max-w-[200px]">
-                      Save ideas that aren't ready for validation just yet.
+                      Validate an idea and get a Build decision to see it here.
                     </p>
                   </div>
                 )}
@@ -448,13 +450,12 @@ export default function DashboardPage() {
                   ))
                 ) : (
                   <div
-                    className="p-12 rounded-xl border-l-[3px] border-l-[#EF9F27] border-y border-r border-dashed border-[rgba(255,255,255,0.06)]/30 flex flex-col items-center justify-center text-center"
-                    style={{ background: "rgba(26, 27, 33, 0.8)", backdropFilter: "blur(8px)" }}
+                    className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6 border-l-[3px] border-l-[#EF9F27] flex flex-col items-center justify-center text-center"
                   >
                     <span className="text-4xl text-[#EF9F27] mb-4 opacity-50">⏳</span>
-                    <div className="text-[#EF9F27] font-mono text-sm">// no ideas here yet</div>
+                    <div className="text-[#EF9F27] font-mono text-sm">// no ideas needing refinement yet</div>
                     <p className="text-[rgba(188,202,187,0.6)] text-xs mt-2 max-w-[200px]">
-                      Save ideas that aren't ready for validation just yet.
+                      Ideas that need a bit of work will show up here.
                     </p>
                   </div>
                 )}
@@ -488,8 +489,7 @@ export default function DashboardPage() {
                   ))
                 ) : (
                   <div
-                    className="p-12 rounded-xl border-l-[3px] border-l-[#888780] border-y border-r border-dashed border-[rgba(255,255,255,0.06)]/30 flex flex-col items-center justify-center text-center"
-                    style={{ background: "rgba(26, 27, 33, 0.8)", backdropFilter: "blur(8px)" }}
+                    className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6 border-l-[3px] border-l-[#888780] flex flex-col items-center justify-center text-center"
                   >
                     <span className="text-4xl text-[#888780] mb-4 opacity-50">⏳</span>
                     <div className="text-[#888780] font-mono text-sm">// no ideas here yet</div>
@@ -506,7 +506,7 @@ export default function DashboardPage() {
 
       <div
         className="md:hidden fixed bottom-0 left-0 right-0 border-t border-[rgba(255,255,255,0.06)]/10 px-6 py-4 flex justify-between items-center z-50"
-        style={{ background: "rgba(26, 27, 33, 0.8)", backdropFilter: "blur(8px)" }}
+        style={{ background: "rgba(26, 27, 33, 0.4)", backdropFilter: "blur(8px)" }}
       >
         <div className="flex flex-col items-center text-[#4ADE80]">
           <span>⊞</span>
