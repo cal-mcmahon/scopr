@@ -247,11 +247,20 @@ export default function AuthPage() {
         </div>
       </nav>
 
-      <main className="relative flex min-h-screen items-center justify-center px-6 pt-24">
+      <main className="relative isolate z-10 flex min-h-screen items-center justify-center px-6 pt-24">
         <canvas
           ref={canvasRef}
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+            zIndex: -1,
+          }}
         />
         <div
           aria-hidden="true"

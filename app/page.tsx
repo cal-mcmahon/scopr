@@ -114,10 +114,11 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="relative pt-24">
+      <main className="relative isolate z-10 pt-24">
         <canvas
           ref={canvasRef}
           aria-hidden="true"
+          className="pointer-events-none"
           style={{
             position: "absolute",
             top: 0,
@@ -125,7 +126,7 @@ export default function Home() {
             width: "100%",
             height: "100%",
             pointerEvents: "none",
-            zIndex: 0,
+            zIndex: -1,
           }}
         />
         <div className="relative z-10">

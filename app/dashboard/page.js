@@ -20,6 +20,31 @@ function confidenceLabel(value) {
   return `[CONFIDENCE: ${Math.round(Number(value))}%]`;
 }
 
+function DashboardDraftCard({ idea, className = "" }) {
+  return (
+    <div
+      className={`landing-card-hover rounded-2xl border border-[rgba(255,255,255,0.06)] border-l-[3px] border-l-[#888780] p-5 ${className}`}
+      style={{
+        background: "rgba(26, 27, 33, 0.4)",
+        backdropFilter: "blur(8px)",
+      }}
+    >
+      <h4 className="mb-3 font-headline font-bold text-[#e2e2e9]">
+        {idea.title || "Untitled idea"}
+      </h4>
+      <Link
+        href={`/idea/${idea.id}/questions`}
+        className="mb-3 inline-block font-mono text-sm text-[#4ADE80] underline-offset-4 hover:underline"
+      >
+        // continue where you left off →
+      </Link>
+      <p className="font-mono text-xs leading-relaxed text-[rgba(188,202,187,0.6)]">
+        {formatIdeaDate(idea.created_at)}
+      </p>
+    </div>
+  );
+}
+
 function IdeaCard({ idea, color }) {
   return (
     <div
@@ -50,6 +75,7 @@ export default function DashboardPage() {
   const [avatarLetter, setAvatarLetter] = useState("S");
   const [typedSubheading, setTypedSubheading] = useState("");
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [draftIdeas, setDraftIdeas] = useState([]);
   const [buildIdeas, setBuildIdeas] = useState([]);
   const [refineIdeas, setRefineIdeas] = useState([]);
   const [revisitIdeas, setRevisitIdeas] = useState([]);
@@ -86,6 +112,7 @@ export default function DashboardPage() {
         .order("created_at", { ascending: false });
 
       const allIdeas = ideas || [];
+      setDraftIdeas(allIdeas.filter((i) => i.status == null));
       setBuildIdeas(allIdeas.filter((i) => i.status === "build"));
       setRefineIdeas(allIdeas.filter((i) => i.status === "refine"));
       setRevisitIdeas(allIdeas.filter((i) => i.status === "revisit"));
@@ -350,7 +377,7 @@ export default function DashboardPage() {
             </Link>
           </section>
 
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <section className="grid grid-cols-3 gap-4 mb-12">
             <div
               className="landing-card-hover p-6 rounded-2xl border border-[#9ca3af]/30"
               style={{
@@ -383,7 +410,29 @@ export default function DashboardPage() {
             </div>
           </section>
 
-          <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          {draftIdeas.length > 0 ? (
+            <section className="mb-12">
+              <p className="mb-4 font-mono text-sm text-[#4ADE80]">// drafts</p>
+              <div className="grid grid-cols-3 gap-4">
+                <DashboardDraftCard idea={draftIdeas[0]} />
+                {draftIdeas.length > 1 ? <DashboardDraftCard idea={draftIdeas[1]} /> : null}
+                {draftIdeas.length > 2 ? (
+                  <Link
+                    href="/dashboard/drafts"
+                    className="landing-card-hover flex items-center justify-center rounded-2xl border border-[rgba(255,255,255,0.06)] border-l-[3px] border-l-[#888780] p-5 font-mono text-sm text-[#4ADE80] underline-offset-4 hover:underline"
+                    style={{
+                      background: "rgba(26, 27, 33, 0.4)",
+                      backdropFilter: "blur(8px)",
+                    }}
+                  >
+                    // see all drafts →
+                  </Link>
+                ) : null}
+              </div>
+            </section>
+          ) : null}
+
+          <section className="grid grid-cols-3 gap-4 items-start">
             <div className="space-y-6">
               <header className="flex items-center justify-between px-2">
                 <div className="flex items-center gap-2">
