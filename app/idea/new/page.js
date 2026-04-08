@@ -138,7 +138,7 @@ export default function IdeaCapturePage() {
   if (checkingAuth) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#111318] text-[#e2e2e9]">
-        <p className="font-mono text-sm text-[#4ADE80]">// loading...</p>
+        <p className="font-mono text-sm text-[#4ADE80]">{"// loading..."}</p>
       </div>
     );
   }
@@ -226,7 +226,7 @@ export default function IdeaCapturePage() {
         </section>
 
         <section className="mb-10 text-center sm:text-left">
-          <p className="font-mono text-sm text-[#4ADE80]">// new idea</p>
+          <p className="font-mono text-sm text-[#4ADE80]">{"// new idea"}</p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             What&apos;s your idea?
           </h1>
@@ -340,13 +340,13 @@ export default function IdeaCapturePage() {
             >
               {loading ? (
                 <span className="font-mono text-[0.8125rem] normal-case tracking-normal text-[#0a0a0a]">
-                  // getting ready...
+                  {"// getting ready..."}
                 </span>
               ) : (
                 "Start validation →"
               )}
             </button>
-            <p className="font-mono text-sm text-[#4ADE80]/90">// takes about 60 seconds</p>
+            <p className="font-mono text-sm text-[#4ADE80]/90">{"// takes about 60 seconds"}</p>
           </div>
         </form>
       </main>

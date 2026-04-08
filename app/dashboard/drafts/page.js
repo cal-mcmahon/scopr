@@ -28,7 +28,7 @@ export default function DashboardDraftsPlaceholderPage() {
       >
         ← back to dashboard
       </Link>
-      <p className="mt-10 font-mono text-[#4ADE80]">// all drafts — coming soon</p>
+      <p className="mt-10 font-mono text-[#4ADE80]">{"// all drafts — coming soon"}</p>
     </div>
   );
 }

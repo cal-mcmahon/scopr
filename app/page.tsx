@@ -182,7 +182,7 @@ export default function Home() {
               className="mt-3 text-4xl font-bold tracking-tight text-white"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              Three steps. That's it.
+              Three steps. That&apos;s it.
             </h2>
             <div className="mt-8 grid gap-5 md:grid-cols-3">
               <article className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6">
@@ -201,7 +201,7 @@ export default function Home() {
                   Answer 7 simple questions
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
-                  We'll ask about the problem, who has it, and why you're the
+                  We&apos;ll ask about the problem, who has it, and why you&apos;re the
                   right person to solve it.
                 </p>
               </article>
@@ -241,7 +241,7 @@ export default function Home() {
                   Build it
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/75">
-                  Your idea has real potential. We'll show you exactly how to
+                  Your idea has real potential. We&apos;ll show you exactly how to
                   get started.
                 </p>
               </article>
@@ -253,7 +253,7 @@ export default function Home() {
                   Needs refinement
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/75">
-                  A few gaps to work through first. We'll tell you what to
+                  A few gaps to work through first. We&apos;ll tell you what to
                   focus on.
                 </p>
               </article>
@@ -265,7 +265,7 @@ export default function Home() {
                   Revisit later
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/75">
-                  Not the right time. We'll save it and remind you when to come
+                  Not the right time. We&apos;ll save it and remind you when to come
                   back.
                 </p>
               </article>
@@ -276,7 +276,7 @@ export default function Home() {
           <section className="px-6 py-16">
           <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(16,22,30,0.95),rgba(8,11,16,0.95))] p-10 text-center">
             <p className="font-mono text-[0.875rem] leading-normal text-[#4ADE80]">
-              // now open
+              {"// now open"}
               <span
                 aria-hidden="true"
                 style={{
@@ -293,7 +293,7 @@ export default function Home() {
               className="mx-auto mt-5 max-w-2xl text-4xl font-bold leading-tight text-white"
               style={{ fontFamily: "var(--font-space-grotesk)" }}
             >
-              Your idea is waiting. Take 60 seconds to find out if it's worth it.
+              Your idea is waiting. Take 60 seconds to find out if it&apos;s worth it.
             </h2>
             <div className="mt-8">
               <Link href="/waitlist" style={ctaStyle}>

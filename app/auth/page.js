@@ -431,7 +431,7 @@ export default function AuthPage() {
                     type="button"
                     style={buttons.secondary}
                   >
-                    // sign in with password{" "}
+                    {"// sign in with password"}{" "}
                     <span
                       className={`ml-2 inline-block transition-transform duration-200 ${
                         showPassword ? "rotate-180" : ""
@@ -482,7 +482,7 @@ export default function AuthPage() {
                     {resetSent ? (
                       <div className="rounded-md border border-[rgba(74,222,128,0.3)] bg-[rgba(74,222,128,0.06)] px-4 py-3">
                         <p className="font-mono text-sm text-[#4ADE80]">
-                          // reset_link_sent ✓
+                          {"// reset_link_sent ✓"}
                         </p>
                         <p className="mt-1 text-sm text-[rgba(255,255,255,0.72)]">
                           Check your email
@@ -527,7 +527,7 @@ export default function AuthPage() {
                     ) : null}
                     {showUsernameRuleError ? (
                       <p className="font-mono text-xs text-[#ff6b6b]">
-                        // error: username can only contain letters, numbers and
+                        {"// error: username can only contain letters, numbers and "}
                         underscores
                       </p>
                     ) : null}
@@ -591,7 +591,7 @@ export default function AuthPage() {
                         ✓ account created — check your email to confirm
                       </p>
                       <p className="mt-1 text-sm text-[rgba(255,255,255,0.72)]">
-                        You're all set.
+                        You&apos;re all set.
                       </p>
                     </div>
                   ) : null}

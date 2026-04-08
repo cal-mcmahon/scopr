@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { buttons, inputs, wordmark } from "@/lib/design-system";
 
-const WORDMARK = "Scopr";
 const TAGLINE =
   "Got lots of ideas but no idea where to start?";
 
@@ -242,7 +241,7 @@ export default function WaitlistPage() {
             <div className="mt-10">
               <TerminalComment text={"// you're in"} />
               <p className="mt-2 text-sm text-white/60">
-                We'll let you know the moment you can start validating your
+                We&apos;ll let you know the moment you can start validating your
                 ideas.
               </p>
             </div>

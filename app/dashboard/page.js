@@ -36,7 +36,7 @@ function DashboardDraftCard({ idea, className = "" }) {
         href={`/idea/${idea.id}/questions`}
         className="mb-3 inline-block font-mono text-sm text-[#4ADE80] underline-offset-4 hover:underline"
       >
-        // continue where you left off →
+        {"// continue where you left off →"}
       </Link>
       <p className="font-mono text-xs leading-relaxed text-[rgba(188,202,187,0.6)]">
         {formatIdeaDate(idea.created_at)}
@@ -142,7 +142,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-[#111318] flex items-center justify-center">
         <p className="font-mono text-[#4ADE80] text-base text-center">
-          // loading your ideas...
+          {"// loading your ideas..."}
         </p>
       </div>
     );
@@ -384,7 +384,7 @@ export default function DashboardPage() {
                 background: "linear-gradient(180deg,rgba(156,163,175,0.10),rgba(17,19,24,0.35))",
               }}
             >
-              <div className="text-[#d1d5db] font-mono text-xs mb-2">// TOTAL_IDEAS</div>
+              <div className="text-[#d1d5db] font-mono text-xs mb-2">{"// TOTAL_IDEAS"}</div>
               <div className="text-4xl font-headline font-extrabold">{totalIdeas}</div>
               <div className="text-[rgba(188,202,187,0.6)] text-sm mt-1">Across all lifecycle stages</div>
             </div>
@@ -394,7 +394,7 @@ export default function DashboardPage() {
                 background: "linear-gradient(180deg,rgba(74,222,128,0.12),rgba(17,19,24,0.35))",
               }}
             >
-              <div className="text-[#4ADE80] font-mono text-xs mb-2">// READY_TO_BUILD</div>
+              <div className="text-[#4ADE80] font-mono text-xs mb-2">{"// READY_TO_BUILD"}</div>
               <div className="text-4xl font-headline font-extrabold text-[#4ADE80]">{buildIdeas.length}</div>
               <div className="text-[rgba(188,202,187,0.6)] text-sm mt-1">High confidence signals</div>
             </div>
@@ -404,7 +404,7 @@ export default function DashboardPage() {
                 background: "linear-gradient(180deg,rgba(245,158,11,0.12),rgba(17,19,24,0.35))",
               }}
             >
-              <div className="text-[#EF9F27] font-mono text-xs mb-2">// IN_REFINEMENT</div>
+              <div className="text-[#EF9F27] font-mono text-xs mb-2">{"// IN_REFINEMENT"}</div>
               <div className="text-4xl font-headline font-extrabold text-[#EF9F27]">{refineIdeas.length}</div>
               <div className="text-[rgba(188,202,187,0.6)] text-sm mt-1">Awaiting more data</div>
             </div>
@@ -412,7 +412,7 @@ export default function DashboardPage() {
 
           {draftIdeas.length > 0 ? (
             <section className="mb-12">
-              <p className="mb-4 font-mono text-sm text-[#4ADE80]">// drafts</p>
+              <p className="mb-4 font-mono text-sm text-[#4ADE80]">{"// drafts"}</p>
               <div className="grid grid-cols-3 gap-4">
                 <DashboardDraftCard idea={draftIdeas[0]} />
                 {draftIdeas.length > 1 ? <DashboardDraftCard idea={draftIdeas[1]} /> : null}
@@ -425,7 +425,7 @@ export default function DashboardPage() {
                       backdropFilter: "blur(8px)",
                     }}
                   >
-                    // see all drafts →
+                    {"// see all drafts →"}
                   </Link>
                 ) : null}
               </div>
@@ -463,7 +463,7 @@ export default function DashboardPage() {
                     className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6 border-l-[3px] border-l-[#4ADE80] flex flex-col items-center justify-center text-center"
                   >
                     <span className="text-4xl text-[#4ADE80] mb-4 opacity-50">⏳</span>
-                    <div className="text-[#4ADE80] font-mono text-sm">// no ideas ready to build yet</div>
+                    <div className="text-[#4ADE80] font-mono text-sm">{"// no ideas ready to build yet"}</div>
                     <p className="text-[rgba(188,202,187,0.6)] text-xs mt-2 max-w-[200px]">
                       Validate an idea and get a Build decision to see it here.
                     </p>
@@ -502,7 +502,7 @@ export default function DashboardPage() {
                     className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6 border-l-[3px] border-l-[#EF9F27] flex flex-col items-center justify-center text-center"
                   >
                     <span className="text-4xl text-[#EF9F27] mb-4 opacity-50">⏳</span>
-                    <div className="text-[#EF9F27] font-mono text-sm">// no ideas needing refinement yet</div>
+                    <div className="text-[#EF9F27] font-mono text-sm">{"// no ideas needing refinement yet"}</div>
                     <p className="text-[rgba(188,202,187,0.6)] text-xs mt-2 max-w-[200px]">
                       Ideas that need a bit of work will show up here.
                     </p>
@@ -541,9 +541,9 @@ export default function DashboardPage() {
                     className="landing-card-hover rounded-2xl border border-[#4ADE80]/20 bg-[linear-gradient(180deg,rgba(74,222,128,0.07),rgba(74,222,128,0.02))] p-6 border-l-[3px] border-l-[#888780] flex flex-col items-center justify-center text-center"
                   >
                     <span className="text-4xl text-[#888780] mb-4 opacity-50">⏳</span>
-                    <div className="text-[#888780] font-mono text-sm">// no ideas here yet</div>
+                    <div className="text-[#888780] font-mono text-sm">{"// no ideas here yet"}</div>
                     <p className="text-[rgba(188,202,187,0.6)] text-xs mt-2 max-w-[200px]">
-                      Save ideas that aren't ready for validation just yet.
+                      Save ideas that aren&apos;t ready for validation just yet.
                     </p>
                   </div>
                 )}
