@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { wordmark } from "@/lib/design-system";
+import { buttons, wordmark } from "@/lib/design-system";
 
 function clampScore(value) {
   const n = Number(value);
@@ -40,14 +40,21 @@ export default function IdeaDecisionPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [ideaTitle, setIdeaTitle] = useState("");
   const [decisionRow, setDecisionRow] = useState(null);
+  const [typedOpening, setTypedOpening] = useState("");
 
   const decision = decisionRow?.decision;
+  const accentColor =
+    {
+      build: "#4ADE80",
+      refine: "#EF9F27",
+      revisit: "#888780",
+    }[decision] ?? "#4ADE80";
   const decisionConfig = useMemo(() => {
     if (decision === "build") {
       return {
         header: "// you're ready to build",
         accent: "#4ADE80",
-        opening: "Your idea has real potential and you're the right person to build it.",
+        gradient: "linear-gradient(to right, #4ADE80, #dcfce7)",
         cta: { label: "// ready to build? →", href: `/idea/${ideaId}/launch`, kind: "primary" },
       };
     }
@@ -56,7 +63,7 @@ export default function IdeaDecisionPage() {
       return {
         header: "// almost there",
         accent: "#EF9F27",
-        opening: "Your idea has something real in it. Here's exactly what to work on.",
+        gradient: "linear-gradient(to right, #EF9F27, #fcd34d)",
         cta: { label: "// let's refine it →", href: `/idea/${ideaId}/questions`, kind: "secondary" },
       };
     }
@@ -64,7 +71,7 @@ export default function IdeaDecisionPage() {
     return {
       header: "// your idea isn't gone",
       accent: "#888780",
-      opening: "The timing isn't right — but your idea is worth keeping.",
+      gradient: "linear-gradient(to right, #888780, #d1d5db)",
       cta: { label: "// back to dashboard →", href: "/dashboard", kind: "secondary" },
     };
   }, [decision, ideaId]);
@@ -208,10 +215,24 @@ export default function IdeaDecisionPage() {
 
   const ideaTitleLine = ideaTitle?.trim() ? ideaTitle.trim() : "Untitled idea";
 
-  const pillStyle = {
-    backgroundColor: `${decisionConfig.accent}33`,
-    borderColor: `${decisionConfig.accent}66`,
-  };
+  const openingLine =
+    decision === "build"
+      ? `${ideaTitleLine} has real potential and you're the right person to build it.`
+      : decision === "refine"
+        ? `${ideaTitleLine} has something real in it. Here's exactly what to work on.`
+        : `${ideaTitleLine} isn't ready yet — but it's worth keeping.`;
+  const headlineGradient = `linear-gradient(to right, ${accentColor}, ${accentColor}cc)`;
+
+  useEffect(() => {
+    setTypedOpening("");
+    let index = 0;
+    const timer = window.setInterval(() => {
+      index += 1;
+      setTypedOpening(openingLine.slice(0, index));
+      if (index >= openingLine.length) window.clearInterval(timer);
+    }, 35);
+    return () => window.clearInterval(timer);
+  }, [openingLine]);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#111318] text-[#e2e2e9]">
@@ -267,16 +288,23 @@ export default function IdeaDecisionPage() {
             <p className="font-mono text-sm" style={{ color: decisionConfig.accent }}>
               {decisionConfig.header}
             </p>
-            <p className="mt-3 font-mono text-xs text-[rgba(188,202,187,0.6)]">{`// idea: ${ideaTitleLine}`}</p>
+            <p className="mt-3 font-mono text-xs" style={{ color: accentColor }}>{`// idea: ${ideaTitleLine}`}</p>
 
             <h1
               className="mt-6 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl"
-              style={{ fontFamily: "var(--font-space-grotesk), Inter, system-ui, sans-serif" }}
+              style={{
+                fontFamily: "var(--font-space-grotesk), Inter, system-ui, sans-serif",
+                background: headlineGradient,
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+                WebkitTextFillColor: "transparent",
+              }}
             >
               {decisionHeadline}
             </h1>
 
-            <p className="mt-4 text-lg text-[#e2e2e9]/90 sm:text-xl">{decisionConfig.opening}</p>
+            <p className="mt-4 text-lg text-[#e2e2e9]/90 sm:text-xl">{typedOpening}</p>
             {decisionSummary ? (
               <p className="mt-3 text-sm leading-relaxed text-[rgba(188,202,187,0.6)] sm:text-base">
                 {decisionSummary}
@@ -285,15 +313,18 @@ export default function IdeaDecisionPage() {
 
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               <div
-                className="rounded-sm border px-4 py-3"
-                style={{ ...pillStyle, backdropFilter: "blur(8px)" }}
+                className="landing-card-hover rounded-2xl border border-[#9ca3af]/30 border-l-[3px] p-6"
+                style={{
+                  background: "linear-gradient(180deg,rgba(156,163,175,0.10),rgba(17,19,24,0.35))",
+                  borderLeftColor: accentColor,
+                }}
               >
                 <div className="flex items-baseline justify-between gap-4">
                   <p className="font-mono text-xs text-[rgba(188,202,187,0.6)]">Market</p>
                   <p className="font-mono text-xs text-[rgba(188,202,187,0.6)]">/100</p>
                 </div>
                 <div className="mt-1 flex items-baseline justify-between gap-4">
-                  <p className="font-mono text-2xl font-bold" style={{ color: decisionConfig.accent }}>
+                  <p className="font-mono text-5xl font-bold leading-none" style={{ color: accentColor }}>
                     {marketScore === null ? "—" : String(marketScore)}
                   </p>
                   <p className="font-mono text-xs text-[rgba(188,202,187,0.6)]">score</p>
@@ -301,15 +332,18 @@ export default function IdeaDecisionPage() {
               </div>
 
               <div
-                className="rounded-sm border px-4 py-3"
-                style={{ ...pillStyle, backdropFilter: "blur(8px)" }}
+                className="landing-card-hover rounded-2xl border border-[#9ca3af]/30 border-l-[3px] p-6"
+                style={{
+                  background: "linear-gradient(180deg,rgba(156,163,175,0.10),rgba(17,19,24,0.35))",
+                  borderLeftColor: accentColor,
+                }}
               >
                 <div className="flex items-baseline justify-between gap-4">
                   <p className="font-mono text-xs text-[rgba(188,202,187,0.6)]">Founder</p>
                   <p className="font-mono text-xs text-[rgba(188,202,187,0.6)]">/100</p>
                 </div>
                 <div className="mt-1 flex items-baseline justify-between gap-4">
-                  <p className="font-mono text-2xl font-bold" style={{ color: decisionConfig.accent }}>
+                  <p className="font-mono text-5xl font-bold leading-none" style={{ color: accentColor }}>
                     {founderScore === null ? "—" : String(founderScore)}
                   </p>
                   <p className="font-mono text-xs text-[rgba(188,202,187,0.6)]">score</p>
@@ -384,10 +418,9 @@ export default function IdeaDecisionPage() {
                 {"// your full plan"}
               </p>
               <div
-                className="mt-4 rounded-sm border border-[rgba(255,255,255,0.06)] p-6"
+                className="landing-card-hover mt-4 rounded-2xl border border-[#9ca3af]/30 p-6"
                 style={{
-                  background: "rgba(26, 27, 33, 0.28)",
-                  backdropFilter: "blur(8px)",
+                  background: "linear-gradient(180deg,rgba(156,163,175,0.10),rgba(17,19,24,0.35))",
                 }}
               >
                 <div className="space-y-4 text-sm leading-relaxed text-[#e2e2e9]/90 sm:text-base">
@@ -405,9 +438,12 @@ export default function IdeaDecisionPage() {
             {decision === "build" ? (
               <Link
                 href={decisionConfig.cta.href}
-                className="inline-flex items-center justify-center rounded-sm px-6 py-4 font-mono text-sm font-bold text-[#0a0a0a] transition hover:brightness-110"
+                className="inline-flex items-center justify-center"
                 style={{
-                  backgroundColor: decisionConfig.accent,
+                  ...buttons.primary,
+                  width: "auto",
+                  padding: "0 24px",
+                  textDecoration: "none",
                   boxShadow: `0 0 24px ${decisionConfig.accent}33`,
                 }}
               >
