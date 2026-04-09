@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { buttons, wordmark } from "@/lib/design-system";
@@ -19,7 +19,6 @@ const questions = [
 export default function IdeaQuestionsPage() {
   const params = useParams();
   const router = useRouter();
-  const particleCanvasRef = useRef(null);
 
   const ideaId = Array.isArray(params?.id) ? params.id[0] : params?.id;
   const storageKey = ideaId ? `scopr_answers_${ideaId}` : null;
@@ -59,52 +58,6 @@ export default function IdeaQuestionsPage() {
       cancelled = true;
     };
   }, [ideaId]);
-
-  // Particle canvas — same pattern as idea/new (40 dots, #4ADE80 @ 20%, slow upward drift)
-  useEffect(() => {
-    const canvas = particleCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const dpr = window.devicePixelRatio || 1;
-
-    const resize = () => {
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const particles = Array.from({ length: 40 }, () => ({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      radius: Math.random() * 1.5 + 0.5,
-      speed: Math.random() * 0.3 + 0.1,
-    }));
-
-    let rafId;
-    const draw = () => {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      for (const p of particles) {
-        p.y -= p.speed;
-        if (p.y < -4) {
-          p.y = window.innerHeight + 4;
-          p.x = Math.random() * window.innerWidth;
-        }
-        ctx.beginPath();
-        ctx.fillStyle = "rgba(74, 222, 128, 0.20)";
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      rafId = requestAnimationFrame(draw);
-    };
-    rafId = requestAnimationFrame(draw);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
 
   // Load any saved draft for this idea
   useEffect(() => {
@@ -243,21 +196,7 @@ export default function IdeaQuestionsPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#111318] text-[#e2e2e9]">
-      <div
-        className="pointer-events-none fixed inset-0 z-0"
-        style={{ pointerEvents: "none" }}
-        aria-hidden
-      >
-        <canvas
-          ref={particleCanvasRef}
-          className="pointer-events-none absolute inset-0 h-full w-full"
-          style={{ pointerEvents: "none" }}
-          aria-hidden
-        />
-      </div>
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_20%_15%,rgba(74,222,128,0.12),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(71,85,105,0.2),transparent_35%)]" />
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
+    <div className="relative min-h-screen overflow-x-hidden text-[#e2e2e9]">
 
       <nav className="sticky top-0 z-50 flex w-full items-center justify-between border-b border-[rgba(255,255,255,0.06)] bg-[#111318]/90 px-4 py-4 backdrop-blur-xl sm:px-6">
         <Link href="/dashboard" className="flex items-center gap-2" style={wordmark.container}>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { buttons, cards, inputs, wordmark } from "@/lib/design-system";
 import { supabase } from "@/lib/supabase";
 
@@ -17,55 +17,6 @@ export default function AuthPage() {
   const [loadingAction, setLoadingAction] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    if (!context) return;
-
-    const setupCanvas = () => {
-      const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.floor(rect.width * dpr);
-      canvas.height = Math.floor(rect.height * dpr);
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    setupCanvas();
-    const particles = Array.from({ length: 40 }, () => ({
-      x: Math.random() * canvas.clientWidth,
-      y: Math.random() * canvas.clientHeight,
-      radius: Math.random() * 1.8 + 0.8,
-      speed: Math.random() * 0.3 + 0.1,
-    }));
-
-    let rafId = 0;
-    const draw = () => {
-      context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-      for (const particle of particles) {
-        particle.y -= particle.speed;
-        if (particle.y < -4) {
-          particle.y = canvas.clientHeight + 4;
-          particle.x = Math.random() * canvas.clientWidth;
-        }
-        context.beginPath();
-        context.fillStyle = "rgba(74, 222, 128, 0.20)";
-        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        context.fill();
-      }
-      rafId = window.requestAnimationFrame(draw);
-    };
-
-    rafId = window.requestAnimationFrame(draw);
-    window.addEventListener("resize", setupCanvas);
-    return () => {
-      window.cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", setupCanvas);
-      context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-    };
-  }, []);
 
   async function handleMagicLink() {
     setErrorMessage("");
@@ -213,9 +164,7 @@ export default function AuthPage() {
     mode === "signup" && username.length > 0 && !isUsernameValid;
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#0b0f12] text-white">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(74,222,128,0.12),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(71,85,105,0.2),transparent_35%)]" />
-      <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
+    <div className="min-h-screen overflow-x-hidden text-white">
       <nav className="fixed left-0 right-0 top-0 z-50 border-b border-[rgba(255,255,255,0.06)] bg-[#111318]">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
           <div style={wordmark.container}>
@@ -248,25 +197,6 @@ export default function AuthPage() {
       </nav>
 
       <main className="relative isolate z-10 flex min-h-screen items-center justify-center px-6 pt-24">
-        <canvas
-          ref={canvasRef}
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none",
-            zIndex: -1,
-          }}
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4ADE80] opacity-[0.06] blur-3xl"
-        />
-
         <div
           className="relative z-10 w-full max-w-[420px] overflow-hidden"
           style={cards.accent}

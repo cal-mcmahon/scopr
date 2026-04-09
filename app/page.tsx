@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
 import { wordmark } from "@/lib/design-system";
 
 function TerminalComment({ text }: { text: string }) {
@@ -20,7 +19,6 @@ function TerminalComment({ text }: { text: string }) {
 }
 
 export default function Home() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctaStyle = {
     backgroundColor: "#4ADE80",
     color: "#0a0a0a",
@@ -41,63 +39,14 @@ export default function Home() {
     textDecoration: "none",
   } as const;
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    if (!context) return;
-
-    const setupCanvas = () => {
-      const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.floor(rect.width * dpr);
-      canvas.height = Math.floor(rect.height * dpr);
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    setupCanvas();
-    const particles = Array.from({ length: 40 }, () => ({
-      x: Math.random() * canvas.clientWidth,
-      y: Math.random() * canvas.clientHeight,
-      radius: Math.random() * 1.8 + 0.8,
-      speed: Math.random() * 0.35 + 0.15,
-    }));
-
-    let rafId = 0;
-    const draw = () => {
-      context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-      for (const particle of particles) {
-        particle.y -= particle.speed;
-        if (particle.y < -4) {
-          particle.y = canvas.clientHeight + 4;
-          particle.x = Math.random() * canvas.clientWidth;
-        }
-        context.beginPath();
-        context.fillStyle = "rgba(74, 222, 128, 0.20)";
-        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        context.fill();
-      }
-      rafId = window.requestAnimationFrame(draw);
-    };
-
-    rafId = window.requestAnimationFrame(draw);
-    window.addEventListener("resize", setupCanvas);
-    return () => {
-      window.cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", setupCanvas);
-    };
-  }, []);
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#0b0f12] text-white">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(74,222,128,0.12),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(71,85,105,0.2),transparent_35%)]" />
-      <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
+    <div className="min-h-screen overflow-x-hidden text-white">
       <div
         className="pointer-events-none fixed left-0 top-0 z-50 h-0.5 w-full bg-[#4ADE80]"
         aria-hidden
       />
 
-      <header className="fixed left-0 right-0 top-0 z-40 border-b border-white/10 bg-[#0b0f12]/80 backdrop-blur-xl">
+      <header className="fixed left-0 right-0 top-0 z-40 border-b border-white/10 bg-[#111318]/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div style={wordmark.container}>
             <div style={wordmark.icon}>&gt;_</div>
@@ -115,20 +64,6 @@ export default function Home() {
       </header>
 
       <main className="relative isolate z-10 pt-24">
-        <canvas
-          ref={canvasRef}
-          aria-hidden="true"
-          className="pointer-events-none"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none",
-            zIndex: -1,
-          }}
-        />
         <div className="relative z-10">
           <section className="px-6 pb-16 pt-10">
           <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-center">

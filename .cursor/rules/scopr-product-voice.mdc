@@ -1,8 +1,6 @@
 ---
-description: Scopr product voice and copy tone for all UI text
 alwaysApply: true
 ---
-
 # Scopr Product Voice
 
 Audience: non-technical people with ideas who feel motivated but intimidated by tech.
@@ -23,8 +21,9 @@ Treat Scopr like a smart, supportive mate: "you can do this, here's where to sta
 - Prefer plain English over technical language.
 - Avoid robotic/system-log phrasing in user-facing copy.
 - Keep buttons conversational and action-first.
-- Never use all-caps button labels.
+- Never use all-caps button labels in JSX — let CSS handle capitalisation.
 - `//` comment lines are friendly narration, not machine status.
+- Never use the word "verdict" — always "decision".
 
 ## Preferred Patterns
 
@@ -37,62 +36,265 @@ Treat Scopr like a smart, supportive mate: "you can do this, here's where to sta
 
 ## Error And Success Patterns
 
-- Error messages start with `⚠` and use plain English.
+- Error messages start with `⚠` and use plain English. Never blame the user.
 - Success messages start with `✓` and feel positive but concise.
-- Never blame the user.
+- Inline error: font-mono text-xs text-[#ff6b6b] — class: .scopr-error
+- Inline success: font-mono text-xs text-[#4ADE80] — class: .scopr-success-inline
+- Success banner: green tinted card — class: .scopr-success-banner
 
 ## Words To Avoid
 
-Do not use words like: leverage, utilise, synergy, scalable, robust.
+Do not use words like: leverage, utilise, synergy, scalable, robust, verdict.
 
-## Design system
+## DESIGN SYSTEM REFERENCE
+
+The single source of truth for all design tokens is lib/design-system.js.
+Always import from there when using inline styles:
+import { colors, fonts, buttons, cards, inputs, wordmark } from '@/lib/design-system'
+
+### Colours
 - Background: #111318
 - Surface: #1a1b21
-- Accent: #4ADE80
+- Accent green: #4ADE80
+- Amber: #EF9F27
+- Gray muted: #888780
 - Text primary: #e2e2e9
 - Text muted: rgba(188, 202, 187, 0.6)
 - Border: rgba(255, 255, 255, 0.06)
-- Button: bg #4ADE80, text #0a0a0a, font-weight 700, rounded-sm
-- Font mono: JetBrains Mono
-- Font body: Inter
-- Font label: Space Grotesk
-- Terminal grid background on all pages
-- Particle animation in hero/centrepiece sections
+- Error: #ff6b6b
+- Button text (on green): #0a0a0a
 
-## Project info
+### Fonts
+- Mono: JetBrains Mono — ALL // comment lines, labels, inputs, badges
+- Body: Inter
+- Label/button: Space Grotesk
+
+## MANDATORY PAGE BACKGROUND — EVERY SCREEN
+
+Every single page in Scopr must have ALL FOUR of these background 
+elements, copied exactly from app/waitlist/page.js. No exceptions.
+
+1. Fixed radial glow overlay:
+<div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(74,222,128,0.12),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(71,85,105,0.2),transparent_35%)]" />
+
+2. Fixed grid pattern:
+<div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
+
+3. Green blob glow (centred, absolute):
+<div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4ADE80] opacity-[0.06] blur-3xl" />
+
+4. Particle canvas — copy the exact canvas implementation from 
+app/waitlist/page.js including useRef, useEffect with animation 
+loop, and canvas JSX element with pointerEvents: none.
+
+Root div of every page:
+className="min-h-screen overflow-x-hidden bg-[#111318] text-white"
+
+The reference implementation is app/waitlist/page.js.
+Always check that file if unsure.
+
+## STANDARD UI COMPONENTS
+
+### Buttons
+Three variants — use CSS classes or lib/design-system.js values.
+Never hardcode button styles inline when a class exists.
+
+PRIMARY — .btn-primary
+- bg #4ADE80, text #0a0a0a, Space Grotesk bold 700, uppercase
+- height 48px, border-radius 2px, padding 0 24px
+- Use for: main CTAs, form submits, key actions
+
+SECONDARY — .btn-secondary
+- transparent bg, border rgba(74,222,128,0.3), text #4ADE80
+- JetBrains Mono, height 48px, border-radius 2px
+- Use for: export, secondary actions, back links as buttons
+
+GHOST — .btn-ghost
+- transparent bg, border rgba(255,255,255,0.08), text #e2e2e9
+- JetBrains Mono, height 48px, border-radius 2px
+- Use for: tertiary actions, Google OAuth, cancel
+
+### Top Nav
+Every authenticated page uses .scopr-nav:
+- sticky top-0, z-40, blur backdrop, border-bottom rgba(255,255,255,0.06)
+- LEFT: >_ Scopr wordmark — always links to /dashboard
+  Use wordmark values from lib/design-system.js
+- RIGHT: page-specific back link using .scopr-nav-link class
+  Format: // [destination] →
+  - Idea capture → // back to dashboard →
+  - Questions → // save draft (special case)
+  - Generating → nothing
+  - Decision → // back to dashboard →
+  - Launch Pack → // back to decision →
+  - Export → // back to launch pack →
+
+### Wordmark
+Always: >_ Scopr where "Scop" is white, "r" is #4ADE80
+>_ sits in a small dark rounded square (wordmark.icon from design-system)
+Use wordmark.container, wordmark.icon, wordmark.text, wordmark.accent
+
+### // Comment Lines
+- Font: JetBrains Mono, size 0.75rem, colour #4ADE80
+- Always lowercase
+- Hero comment lines get a blinking █ cursor using .terminal-cursor class
+- Pattern: <span className="terminal-cursor">█</span>
+- Use the TerminalComment component from waitlist/page.js as reference
+
+### Typing Effect Subheading
+- Used on hero/centrepiece sections only
+- Speed: 35ms per character via setInterval
+- Starts on page load with 0.3-0.5s delay
+- Font: Inter or Space Grotesk, text-lg, text-white/85
+- No cursor after it — text types in cleanly
+- Reference implementation: app/waitlist/page.js
+
+### Form Inputs
+TEXT INPUT — .input-default (or inputs.default from design-system)
+- bg #0c0e13, JetBrains Mono, height 44px
+- Default ring: 0 0 0 1px rgba(134,148,134,0.2)
+- Focus ring: 0 0 0 1px #4ADE80 (via onFocus/onBlur handlers)
+- Placeholder: rgba(255,255,255,0.35)
+
+INPUT LABEL — .input-label
+- JetBrains Mono, 10px, uppercase, tracking-widest
+- Colour: rgba(255,255,255,0.45)
+
+TEXTAREA
+- bg-transparent, rounded-md, padding 16px
+- Font: Inter, 0.9375rem, leading-relaxed, #e2e2e9
+- Placeholder: rgba(188,202,187,0.35)
+- Focus: outline-none only
+- Character count: absolute bottom-right, JetBrains Mono 11px, 
+  rgba(188,202,187,0.5), format {current}/{max}
+- Hint text below: JetBrains Mono 11px, rgba(188,202,187,0.45)
+  Shows ⚠ warning when below minimum character count
+
+### Glass Cards (neutral — default for ALL content cards)
+Class: .glass-card
+- background: rgba(26, 27, 33, 0.4)
+- backdrop-filter: blur(8px)
+- -webkit-backdrop-filter: blur(8px)
+- border: 1px solid rgba(255, 255, 255, 0.06)
+- border-radius: 4px
+
+Use for: ALL cards, panels, content boxes, score cards, 
+// scopr says banner, launch pack cards, preview panels, 
+quiz cards, form containers. No exceptions.
+
+### Stat Cards (dashboard only — NOT for content cards)
+Three variants — only used for the dashboard summary stats:
+- .stat-card-green — build stats
+- .stat-card-amber — refine stats  
+- .stat-card-neutral — total/neutral stats
+These use gradient backgrounds. Do NOT use for content cards.
+
+### Card Colour Coding (left border)
+- Build → border-left: 3px solid #4ADE80 (.accent-green)
+- Refine → border-left: 3px solid #EF9F27 (.accent-amber)
+- Revisit → border-left: 3px solid #888780 (.accent-gray)
+- Draft → border-left: 3px solid #888780 (.accent-gray)
+
+### Score Display
+- Score number: Space Grotesk or JetBrains Mono, bold, text-4xl minimum
+- Colour always matches decision: build=#4ADE80, refine=#EF9F27, revisit=#888780
+- Score bar: .score-bar + .score-bar-fill, height 8px
+- Score bar fill colour matches decision accent
+
+### // Scopr Says Banner
+- .glass-card + border-left: 3px solid #4ADE80
+- Label: // scopr says in JetBrains Mono, #4ADE80, text-xs
+- Content: max-height 120px, scrollable, .scopr-says-scroll
+- Shows decision_summary — fallback to first 2 sentences of full_plan
+
+### Preview Panel (launch pack)
+- .glass-card, padding p-6
+- Header: // [card title] in JetBrains Mono #4ADE80
+- Copy button: .btn-secondary style, top-right, small
+  Shows // copy → then // copied ✓ for 2 seconds on click
+
+### Section Labels
+Class: .scopr-section-label
+- JetBrains Mono, 10px, uppercase, tracking 0.2em
+- Colour: rgba(188,202,187,0.5)
+- Example: "YOUR LAUNCH PACK — CLICK ANY CARD TO PREVIEW"
+
+### Badges
+- .badge-v2 — amber, for v2 features
+- .badge-v3 — gray, for v3 features
+
+### Loading State
+Class: .scopr-loading
+- JetBrains Mono, text-base, #4ADE80, centred
+- Format: // loading [thing]...
+
+### Generating State
+- Header: // preparing [thing]... in .scopr-loading style
+- Cycling messages: framer-motion AnimatePresence, fade in/out, 3s interval
+  Messages in JetBrains Mono, text-sm, rgba(188,202,187,0.6)
+- Progress bar: animated sliding fill, track rgba(74,222,128,0.18),
+  fill #4ADE80, infinite loop via framer-motion
+- Reference: app/idea/[id]/launch/page.js generating phase
+
+### Error States
+Class: .scopr-error
+- JetBrains Mono, text-xs, #ff6b6b
+- Always start with ⚠
+- Always include // try again → button (.btn-secondary) below
+
+### Success States
+Inline: .scopr-success-inline — JetBrains Mono, text-xs, #4ADE80
+Banner: .scopr-success-banner
+- green tinted card, green border
+- Title: .scopr-success-banner-title (JetBrains Mono, text-sm, #4ADE80)
+- Subtext: .scopr-success-banner-sub (text-sm, rgba(255,255,255,0.72))
+
+## MANDATORY CARD AND SURFACE STYLES
+
+Every card, panel, content box, and surface uses .glass-card. No exceptions.
+The only exception is dashboard stat cards which use .stat-card-* variants.
+
+## Project Info
+
 - Product: Scopr — AI idea validation for non-technical people
 - Tagline: "For people with lots of ideas but no idea where to start."
 - Live at: tryscopr.com
 - Stack: Next.js (app router), Tailwind CSS, Supabase, Claude API, Vercel
 
-## Wordmark
-Always render as: >_ Scopr where "Scop" is white and "r" is #4ADE80
-The >_ sits in a small dark rounded square with a subtle border
+## Pages Built
 
-## Pages already built
 - app/page.tsx — landing page
-- app/waitlist/page.js — waitlist with Supabase email capture
-- app/auth/page.js — auth with email/password, Google OAuth, magic link
+- app/waitlist/page.js — waitlist (REFERENCE IMPLEMENTATION for backgrounds)
+- app/auth/page.js — auth
+- app/dashboard/page.js — dashboard
+- app/idea/new/page.js — idea capture
+- app/idea/[id]/questions/page.js — questionnaire
+- app/idea/[id]/generating/page.js — generating screen
+- app/idea/[id]/decision/page.js — decision screen
+- app/idea/[id]/launch/page.js — launch pack (REFERENCE for generating/loading states)
 
-## Supabase tables
+## Supabase Tables
+
 - waitlist — id, email, created_at
 - profiles — id, username, display_name, email, created_at
-- ideas — id, user_id, title, description, status (build/refine/refine), confidence_score, created_at
+- ideas — id, user_id, title, description, status (build/refine/revisit), confidence_score, created_at
+- quiz_answers — id, idea_id, question_number, question, answer, created_at
+- decisions — id, idea_id, market_score, founder_score, decision, decision_headline, decision_summary, market_analysis, founder_analysis, next_step, full_plan, created_at
+- launch_packs — id, idea_id, one_pager, mvp_scope, prd, created_at
 
-## Glass card effect
-background: rgba(26, 27, 33, 0.8) with backdrop-filter: blur(8px)
+## The Three Decisions (never call them verdicts)
 
-## The three decisions (never call them verdicts)
 - Build it — strong signals, high founder fit, high Q7 enthusiasm
 - Needs refinement — addressable gaps, fixable in 2-4 weeks, Q7 must be high
 - Revisit later — structural issues or low Q7. You cannot refine your way to passion.
 
-## Security rules
+## Security Rules
+
 - Always use RLS on every Supabase table
 - Never expose service role key — anon key only in frontend
 - All keys in .env.local — never commit to GitHub
 - Auth protect all pages except /, /waitlist, /auth
 
-## The product philosophy
+## The Product Philosophy
+
 Compete on confidence not features.
 Every screen should ask: does this make the user feel more confident about their idea?

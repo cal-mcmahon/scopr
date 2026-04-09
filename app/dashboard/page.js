@@ -161,50 +161,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#0b0f12] text-[#e2e2e9] font-body selection:bg-primary selection:text-on-primary-container">
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_20%_15%,rgba(74,222,128,0.12),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(71,85,105,0.2),transparent_35%)]" />
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
-      <style jsx global>{`
-        .signature-gradient {
-          background: linear-gradient(135deg, #6bfb9a 0%, #4ade80 100%);
-        }
-        @keyframes drift {
-          0% {
-            transform: translateY(0) translateX(0);
-            opacity: 0;
-          }
-          50% {
-            opacity: 0.55;
-          }
-          100% {
-            transform: translateY(-100px) translateX(20px);
-            opacity: 0;
-          }
-        }
-        .particle {
-          position: absolute;
-          width: 3px;
-          height: 3px;
-          background: #4ade80;
-          border-radius: 50%;
-          pointer-events: none;
-          animation: drift 8s infinite linear;
-        }
-      `}</style>
-      <div className="fixed inset-0 pointer-events-none z-[1]">
-        <div className="particle" style={{ left: "8%", top: "88%", animationDelay: "0s" }} />
-        <div className="particle" style={{ left: "15%", top: "72%", animationDelay: "1.5s" }} />
-        <div className="particle" style={{ left: "22%", top: "95%", animationDelay: "3.2s" }} />
-        <div className="particle" style={{ left: "30%", top: "78%", animationDelay: "0.8s" }} />
-        <div className="particle" style={{ left: "38%", top: "90%", animationDelay: "2.6s" }} />
-        <div className="particle" style={{ left: "45%", top: "68%", animationDelay: "4.1s" }} />
-        <div className="particle" style={{ left: "53%", top: "92%", animationDelay: "1.1s" }} />
-        <div className="particle" style={{ left: "60%", top: "76%", animationDelay: "3.7s" }} />
-        <div className="particle" style={{ left: "68%", top: "86%", animationDelay: "0.4s" }} />
-        <div className="particle" style={{ left: "75%", top: "70%", animationDelay: "2.2s" }} />
-        <div className="particle" style={{ left: "82%", top: "94%", animationDelay: "4.6s" }} />
-        <div className="particle" style={{ left: "90%", top: "80%", animationDelay: "1.9s" }} />
-      </div>
+    <div className="min-h-screen overflow-x-hidden text-[#e2e2e9] font-body selection:bg-primary selection:text-on-primary-container">
 
       <nav className="bg-[#111318] backdrop-blur-xl font-['Inter'] font-bold tracking-tight text-[#e2e2e9] sticky top-0 z-50 border-b border-[rgba(255,255,255,0.06)]/10 flex justify-between items-center w-full px-6 py-4">
         <div className="flex items-center gap-8">
